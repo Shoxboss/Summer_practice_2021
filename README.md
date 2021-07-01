@@ -1,3 +1,3 @@
 # SummerPractise
 
-![Source/Images/Target.gif]()
+![/Source/Images/Target.gif]()
