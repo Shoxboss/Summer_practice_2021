@@ -4,8 +4,7 @@
 **Репозиторий для летней практики 2021**
 
 ## **Спецификация:**
-<center>![](./Source/Images/using.jpg)</center>
-
+![](./Source/Images/using.jpg)
 
 ### **Описание задачи:**
 
