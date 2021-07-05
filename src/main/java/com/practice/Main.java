@@ -2,6 +2,7 @@ package com.practice;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,10 +12,10 @@ import java.io.IOException;
 
 public class Main extends JFrame {
     private JPanel mainPanel;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
+    private Scene leftPanel;
+    private Scene rightPanel;
     private JLabel statusLabel;
-
+    private boolean verticesAdding = false;
 
     public static void main(String[] args) {
         new Main();
@@ -75,14 +76,15 @@ public class Main extends JFrame {
         String offset = "        ";
         statusLabel.setText(offset+msg);
     }
-    private JPanel createLeftPanel() {
-        leftPanel = new JPanel();
-        leftPanel.setBackground(Color.WHITE);
+    private Scene createLeftPanel() {
+
+        leftPanel = new Scene(true);
+        
         return leftPanel;
     }
 
-    private JPanel createRightPanel() {
-        rightPanel = new JPanel();
+    private Scene createRightPanel() {
+        rightPanel = new Scene(false);
         rightPanel.setBackground(Color.white);
         rightPanel.setBorder(new LineBorder(new Color(232, 232, 232)));
         return rightPanel;
@@ -219,7 +221,18 @@ public class Main extends JFrame {
         JButton runStop_btn = new JButton(new ImageIcon("Images/run.png"));
         JButton forward_btn = new JButton(new ImageIcon("Images/forward.png"));
 
-        addVertex_btn.setSize(new Dimension(40, 40));
+        addVertex_btn.addActionListener( actionEvent -> {
+			
+            verticesAdding = !verticesAdding; 
+            leftPanel.setVerticesAdding(verticesAdding);
+            if( verticesAdding ) {
+
+                statusLabel.setText("Vertices Adding...");
+                addVertex_btn.setBackground(Color.LIGHT_GRAY);
+            }else {
+                addVertex_btn.setBackground(Color.WHITE);
+            }
+        });
         toolBar.add(addVertex_btn);
         toolBar.add(addRib_btn);
         toolBar.add(delete_btn);
