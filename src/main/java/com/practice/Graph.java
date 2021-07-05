@@ -1,6 +1,7 @@
 package com.practice;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Graph implements Cloneable{
     private ArrayList<Node> vertices;
@@ -15,31 +16,41 @@ public class Graph implements Cloneable{
         countVertices = 0;
     }
 
-    private int findVertex(String u) {
-        if (vertices != null) {
-            for (Node nodes : vertices) {
-                if (nodes.getName().equals(u)) {
-                    return vertices.indexOf(nodes);
-                }
+    public Graph(ArrayList<Node> vertices, ArrayList<Edge> edges) {
+        this.vertices = vertices;
+        this.edges = edges;
+        countEdges = edges.size();
+        countVertices = vertices.size();
+    }
+
+    public int findVertex(String u) {
+        for (Node nodes : vertices) {
+            if (nodes.getName().equals(u)) {
+                return vertices.indexOf(nodes);
             }
         }
         return -1;
     }
 
-
-    /*public void addVertex(String v) {
-        if (!findVertex(v)) {
+    public void addVertex(String v) {
+        if (v == null) {
+            throw new IllegalArgumentException("Нельзя добавить пустую вершину");
+        }
+        if (findVertex(v) == -1) {
             vertices.add(new Node(v));
             countVertices++;
         }
-    }*/
+        else {
+            System.out.println("Вершина с таким именем уже существует");
+        }
+    }
 
-    public void addVertex(Node v) {
+    /*public void addVertex(Node v) {
         if (!vertices.contains(v)) {
             vertices.add(v);
             countVertices++;
         }
-    }
+    }*/
 
 
     /*public void addEdge(String u, String v, int w) {
@@ -53,8 +64,12 @@ public class Graph implements Cloneable{
     }*/
 
     public void addEdge(String u, String v, int w) {
+        if (u == null || v == null) {
+            throw new IllegalArgumentException("Нельзя добавить ребро с пустой вершиной");
+        }
         if (u.equals(v)) {
-            return; // Дописать исключение IncorrectArgumentException
+            System.out.println("Начальная и конечная вершины одинаковые");
+            return;
         }
         int indexStart = findVertex(u);
         int indexEnd = findVertex(v);
@@ -76,24 +91,55 @@ public class Graph implements Cloneable{
             vertices.add(end);
             countVertices++;
         }
-        edges.add(new Edge(start, end, w));
+        Edge newEdge = new Edge(start, end, w);
+        for (Edge edge: edges) {
+            if (edge.getStartName().equals(u) & edge.getEndName().equals(v)) {
+                System.out.println("Такое ребро уже существует");
+                return;
+            }
+        }
+        edges.add(newEdge);
         countEdges++;
+        /*if (edges.contains(newEdge)) {
+            System.out.println("Такое ребро уже есть");
+        }
+        else {
+            edges.add(newEdge);
+            countEdges++;
+        }*/
     }
 
     public void removeVertex(String v) {
-        Node newNode = new Node(v);
-        if (vertices.remove(newNode)) {
-            for (Edge edge: edges) {
-                if (edge.getStartName().equals(v) | edge.getEndName().equals(v)) {
-                    removeEdge(edge.getStartName(), edge.getEndName());
+        if (v == null) {
+            throw new IllegalArgumentException("Нельзя удалить пустую вершину");
+        }
+        int nodeIndex = findVertex(v);
+        if (nodeIndex != -1) {
+            vertices.remove(nodeIndex);
+            countVertices--;
+            Iterator<Edge> edgeIterator = edges.iterator();
+            while (edgeIterator.hasNext()) {
+                Edge edgeNext = edgeIterator.next();
+                if (edgeNext.getStartName().equals(v) | edgeNext.getEndName().equals(v)) {
+                    edgeIterator.remove();
+                    countEdges--;
                 }
             }
         }
     }
 
-    public void removeEdge(String start, String end ) {
-        Edge newEdge = new Edge(new Node(start), new Node(end), 0);
-        edges.remove(newEdge);
+    public void removeEdge(String start, String end, int w) {
+        if (start == null || end == null) {
+            throw new IllegalArgumentException("Нельзя удалить ребро с пустой вершиной");
+        }
+        if (start.equals(end)) {
+            System.out.println("Начальная и конечная вершины одинаковые");
+            return;
+        }
+        Edge remEdge = new Edge(new Node(start), new Node(end), w);
+        if (edges.remove(remEdge)) {
+            countEdges--;
+        }
     }
 
     public ArrayList<Node> getVertices() {
@@ -124,7 +170,7 @@ public class Graph implements Cloneable{
         }
     }
 
-    public void setVertices(ArrayList<Node> vertices) {
+    /*public void setVertices(ArrayList<Node> vertices) {
         this.vertices = vertices;
     }
 
@@ -138,15 +184,11 @@ public class Graph implements Cloneable{
 
     public void setCountEdges(int countEdges) {
         this.countEdges = countEdges;
-    }
+    }*/
 
     public Object clone()
     {
-        Graph graph = new Graph();
-        graph.setCountEdges(this.getCountEdges());
-        graph.setCountVertices(this.getCountVertices());
-        graph.setEdges((ArrayList<Edge>) this.getEdges().clone());
-        graph.setVertices((ArrayList<Node>) this.getVertices().clone());
+        Graph graph = new Graph((ArrayList<Node>) this.getVertices().clone(), (ArrayList<Edge>) this.getEdges().clone());
         return graph;
     }
 

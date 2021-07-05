@@ -1,6 +1,5 @@
 package com.practice;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,10 +15,10 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
     private Edge[] minEdges;
 
 
-    public BoruvkaAlg() {
+    /*public BoruvkaAlg() {
         mst = new ArrayList<>();
         init();
-    }
+    }*/
 
     public BoruvkaAlg(Graph graph) {
         mst = new ArrayList<>();
@@ -27,7 +26,7 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         init();
     }
 
-    //IT WORKS!!!!
+   /* //IT WORKS!!!!
     @Deprecated
     public void run(Graph graph) {
         int countVertices = graph.getCountVertices();
@@ -98,8 +97,7 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
             System.out.println("CountTree = " + countTree);
             //
         }
-    }
-
+    }*/
 
     private void changeComponent(int compStart, int compEnd, Edge edge) {
         if (compStart > compEnd) {
@@ -141,11 +139,11 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         }
 
         //Debug
-        for (int i = 0; i < minEdges.length; i++) {
+        /*for (int i = 0; i < minEdges.length; i++) {
             if (minEdges[i] != null) {
                 System.out.println(i + ": " + minEdges[i].toString());
             }
-        }
+        }*/
         //
 
         for (Edge minEdge: minEdges) {
