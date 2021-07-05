@@ -48,11 +48,9 @@ public class GraphTest {
         g.addEdge("a", "g", 5);
         assertEquals(4, g.getCountEdges());
         g.addEdge("a", "g", 6);
-        assertEquals(5, g.getCountEdges());
-        g.addEdge("a", "g", 5);
-        assertEquals(5, g.getCountEdges());
+        assertEquals(4, g.getCountEdges());
         g.addEdge("a", "a", 7);
-        assertEquals(5, g.getCountEdges());
+        assertEquals(4, g.getCountEdges());
         thrown.expect(IllegalArgumentException.class);
         g.addEdge(null, null, 3);
     }

@@ -92,13 +92,21 @@ public class Graph implements Cloneable{
             countVertices++;
         }
         Edge newEdge = new Edge(start, end, w);
-        if (edges.contains(newEdge)) {
+        for (Edge edge: edges) {
+            if (edge.getStartName().equals(u) & edge.getEndName().equals(v)) {
+                System.out.println("Такое ребро уже существует");
+                return;
+            }
+        }
+        edges.add(newEdge);
+        countEdges++;
+        /*if (edges.contains(newEdge)) {
             System.out.println("Такое ребро уже есть");
         }
         else {
             edges.add(newEdge);
             countEdges++;
-        }
+        }*/
     }
 
     public void removeVertex(String v) {
