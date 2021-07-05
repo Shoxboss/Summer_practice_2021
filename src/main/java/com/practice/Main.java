@@ -39,6 +39,8 @@ public class Main extends JFrame {
         Facade facade = new Facade(graph);
         CareTaker careTaker = new CareTaker(facade);
 
+        /*facade.doAlgorithm();
+        facade.printMst();*/
 
         facade.algorithmStep();
         careTaker.backup();

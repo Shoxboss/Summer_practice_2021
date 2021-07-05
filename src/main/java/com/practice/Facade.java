@@ -31,6 +31,10 @@ public class Facade {
         currentMst = algorithm.getMst();
     }
 
+    public void doAlgorithm() {
+        algorithm.doAlgorithm();
+    }
+
     //а пробросит ли дальше оно исключение?
     public void restore(FacadeMemento snap) throws NullPointerException{
         this.graph = snap.getGraph();
