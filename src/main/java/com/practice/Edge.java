@@ -56,21 +56,26 @@ public class Edge implements Cloneable{
             return false;
         }
         if (o instanceof Edge) {
-            if (start.getName().equals(((Edge) o).getStartName()) & end.getName().equals(((Edge) o).getEndName())) {
+            if (start.getName().equals(((Edge) o).getStartName()) & end.getName().equals(((Edge) o).getEndName()) & ((Edge)o).getWeight() == weight) {
                 return true;
             }
         }
         return false;
     }
 
-    @Override
+    /*@Override
     public int hashCode() {
         return start.hashCode() + end.hashCode();
+    }*/
+
+    @Override
+    public int hashCode() {
+        return start.hashCode() + end.hashCode() + weight;
     }
 
     @Override
     public Object clone(){
-        Edge edge = new Edge((Node)this.getStart().clone(), (Node)this.getEnd().clone(), this.getWeight());
+        Edge edge = new Edge((Node)this.getStart().clone(), (Node)this.getEnd().clone(), weight);
         return edge;
     }
 }
