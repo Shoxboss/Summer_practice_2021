@@ -1,6 +1,8 @@
+package com.practice;
+
 import java.util.Objects;
 
-public class Edge {
+public class Edge implements Cloneable{
 
     private Node start;
     private Node end;
@@ -64,5 +66,11 @@ public class Edge {
     @Override
     public int hashCode() {
         return start.hashCode() + end.hashCode();
+    }
+
+    @Override
+    public Object clone(){
+        Edge edge = new Edge((Node)this.getStart().clone(), (Node)this.getEnd().clone(), this.getWeight());
+        return edge;
     }
 }
