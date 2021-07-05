@@ -1,7 +1,10 @@
+package com.practice;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BoruvkaAlg implements Algorithm {
+public class BoruvkaAlg implements Algorithm, Cloneable {
 
     private Graph graph;
     private ArrayList<Edge> mst;
@@ -25,7 +28,8 @@ public class BoruvkaAlg implements Algorithm {
     }
 
     //IT WORKS!!!!
-    void run(Graph graph) {
+    @Deprecated
+    public void run(Graph graph) {
         int countVertices = graph.getCountVertices();
         int countEdges = graph.getCountEdges();
         ArrayList<Node> vertices = graph.getVertices();
@@ -97,7 +101,7 @@ public class BoruvkaAlg implements Algorithm {
     }
 
 
-    void changeComponent(int compStart, int compEnd, Edge edge) {
+    private void changeComponent(int compStart, int compEnd, Edge edge) {
         if (compStart > compEnd) {
             edge.getStart().setComponent(compEnd);
         }
@@ -106,7 +110,7 @@ public class BoruvkaAlg implements Algorithm {
         }
     }
 
-    public void init() {
+    private void init() {
         countVertices = graph.getCountVertices();
         countEdges = graph.getCountEdges();
         vertices = graph.getVertices();
@@ -120,7 +124,8 @@ public class BoruvkaAlg implements Algorithm {
         }
     }
 
-    public void boruvkaStep() {
+    @Override
+    public void algorithmStep() {
         Arrays.fill(minEdges, null);
         for (Edge edge: edges) {
             int comp1 = edge.getStart().getComponent();
@@ -156,16 +161,22 @@ public class BoruvkaAlg implements Algorithm {
         }
     }
 
+    @Override
     public void doAlgorithm() {
         while (countTree > 1) {
-            boruvkaStep();
+            algorithmStep();
         }
     }
 
-    void printRes() {
+    @Override
+    public void printRes() {
         for (Edge edge: mst) {
             System.out.println(edge.toString());
         }
     }
 
+    @Override
+    public ArrayList<Edge> getMst() {
+        return mst;
+    }
 }

@@ -1,4 +1,6 @@
-public class Node {
+package com.practice;
+
+public class Node implements Cloneable{
 
     private String name;
     private int component;
@@ -66,6 +68,13 @@ public class Node {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public Object clone(){
+        Node node = new Node(this.getName(), this.getX(), this.getY());
+        node.setComponent(this.getComponent());
+        return node;
     }
 
 /*    @Override

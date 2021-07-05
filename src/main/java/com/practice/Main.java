@@ -24,6 +24,30 @@ public class Main extends JFrame {
         InitUI();
         this.pack();
         this.setVisible(true);
+
+
+        Graph graph = new Graph();
+        graph.addEdge("a", "b", 1);
+        graph.addEdge("a", "c", 2);
+        graph.addEdge("c", "b", 4);
+        graph.addEdge("b", "d", 3);
+        graph.addEdge("b", "e", 5);
+        graph.addEdge("c", "e", 1);
+        graph.addEdge("e", "d", 5);
+
+        //BoruvkaAlg alg = new BoruvkaAlg(graph);
+        Facade facade = new Facade(graph);
+        CareTaker careTaker = new CareTaker(facade);
+
+
+        facade.algorithmStep();
+        careTaker.backup();
+        facade.algorithmStep();
+
+        facade.printMst();
+        careTaker.undo();
+        facade.printMst();
+
     }
 
     private void InitUI() {

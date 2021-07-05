@@ -1,6 +1,8 @@
+package com.practice;
+
 import java.util.ArrayList;
 
-public class Graph {
+public class Graph implements Cloneable{
     private ArrayList<Node> vertices;
     private ArrayList<Edge> edges;
     private int countVertices;
@@ -24,7 +26,7 @@ public class Graph {
         return -1;
     }
 
-    @Deprecated
+
     /*public void addVertex(String v) {
         if (!findVertex(v)) {
             vertices.add(new Node(v));
@@ -39,7 +41,7 @@ public class Graph {
         }
     }
 
-    @Deprecated
+
     /*public void addEdge(String u, String v, int w) {
         if (u.equals(v)) {
             return; // Дописать исключение IncorrectArgumentException
@@ -120,6 +122,32 @@ public class Graph {
         for (Edge edge: edges) {
             System.out.println(edge.toString());
         }
+    }
+
+    public void setVertices(ArrayList<Node> vertices) {
+        this.vertices = vertices;
+    }
+
+    public void setEdges(ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
+    public void setCountVertices(int countVertices) {
+        this.countVertices = countVertices;
+    }
+
+    public void setCountEdges(int countEdges) {
+        this.countEdges = countEdges;
+    }
+
+    public Object clone()
+    {
+        Graph graph = new Graph();
+        graph.setCountEdges(this.getCountEdges());
+        graph.setCountVertices(this.getCountVertices());
+        graph.setEdges((ArrayList<Edge>) this.getEdges().clone());
+        graph.setVertices((ArrayList<Node>) this.getVertices().clone());
+        return graph;
     }
 
 }
