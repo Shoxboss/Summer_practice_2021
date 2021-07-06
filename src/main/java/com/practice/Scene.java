@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class Scene extends JPanel {// implements MouseListener {
+public class Scene extends JPanel {
 
     private boolean verticesAdding = false;
 
