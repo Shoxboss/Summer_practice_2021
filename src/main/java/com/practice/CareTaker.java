@@ -1,15 +1,14 @@
 package com.practice;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class CareTaker {
-    private Facade originator;
-    private ArrayList<Memento> history;
+    private BoruvkaAlg originator;
+    private ArrayList<BoruvkaAlg.AlgorithmMemento> history;
     private int cur = -1;
 
-    public CareTaker(Facade facade){
-        originator = facade;
+    public CareTaker(BoruvkaAlg algorithm){
+        originator = algorithm;
         history = new ArrayList<>();
     }
 
@@ -20,7 +19,7 @@ public class CareTaker {
 
     public void undo(){
         if (history.size() > 0) {
-             FacadeMemento snap = (FacadeMemento)history.get(cur);
+             BoruvkaAlg.AlgorithmMemento snap = history.get(cur);
              cur--;
              try {
                  originator.restore(snap);

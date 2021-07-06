@@ -14,11 +14,22 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
     private ArrayList<Edge> edges;
     private Edge[] minEdges;
 
+    public class AlgorithmMemento {
+        private Graph graphStorage;
+        private ArrayList<Edge> mstStorage;
+        private int countTreeStorage;
 
-    /*public BoruvkaAlg() {
-        mst = new ArrayList<>();
-        init();
-    }*/
+        public AlgorithmMemento(){
+            this.graphStorage = (Graph) graph.clone();
+            ArrayList<Edge> cloneMst = new ArrayList<>(mst.size());
+            for (Edge edge : mst){
+                cloneMst.add((Edge)edge.clone());
+            }
+            this.mstStorage = cloneMst;
+            this.countTreeStorage = countTree;
+        }
+
+    }
 
     public BoruvkaAlg(Graph graph) {
         mst = new ArrayList<>();
@@ -26,78 +37,6 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         init();
     }
 
-   /* //IT WORKS!!!!
-    @Deprecated
-    public void run(Graph graph) {
-        int countVertices = graph.getCountVertices();
-        int countEdges = graph.getCountEdges();
-        ArrayList<Node> vertices = graph.getVertices();
-        ArrayList<Edge> edges = graph.getEdges();
-        Edge[] minEdges = new Edge[countVertices];
-        int n = 0;
-        for (Node vertex: vertices) {
-            vertex.setComponent(n);
-            n++;
-        }
-
-        //Debug
-        for (Edge edge: edges) {
-            System.out.println(edge.getStartName() + " " + edge.getStart().getComponent());
-            System.out.println(edge.getEndName() + " " + edge.getEnd().getComponent());
-            System.out.println("-------");
-        }
-        //
-
-        int countTree = countVertices;
-
-        while (countTree > 1) {
-            Arrays.fill(minEdges, null);
-            for (Edge edge: edges) {
-                int comp1 = edge.getStart().getComponent();
-                int comp2 = edge.getEnd().getComponent();
-                if (comp1 != comp2) {
-                    if (minEdges[comp1] == null || edges.get(edges.indexOf(minEdges[comp1])).getWeight() > edge.getWeight()) {
-                        minEdges[comp1] = edge;
-                    }
-                    if (minEdges[comp2] == null || edges.get(edges.indexOf(minEdges[comp2])).getWeight() > edge.getWeight()) {
-                        minEdges[comp2] = edge;
-                    }
-                }
-            }
-
-            //Debug
-            for (int i = 0; i < minEdges.length; i++) {
-                if (minEdges[i] != null) {
-                    System.out.println(i + ": " + minEdges[i].toString());
-                }
-            }
-            //
-
-            for (Edge minEdge: minEdges) {
-                if (minEdge != null) {
-                    int comp1 = minEdge.getStart().getComponent();
-                    int comp2 = minEdge.getEnd().getComponent();
-                    if (comp1 != comp2) {
-                        mst.add(minEdge);
-                        changeComponent(comp1, comp2, minEdge);
-                        countTree--;
-                    }
-                }
-            }
-
-            //Debug
-            for (Edge edge: edges) {
-                System.out.println("After changes");
-                System.out.println(edge.getStartName() + " " + edge.getStart().getComponent());
-                System.out.println(edge.getEndName() + " " + edge.getEnd().getComponent());
-                System.out.println("-------");
-            }
-
-            //
-            System.out.println("CountTree = " + countTree);
-            //
-        }
-    }*/
 
     private void changeComponent(int compStart, int compEnd, Edge edge) {
         if (compStart > compEnd) {
@@ -138,13 +77,6 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
             }
         }
 
-        //Debug
-        /*for (int i = 0; i < minEdges.length; i++) {
-            if (minEdges[i] != null) {
-                System.out.println(i + ": " + minEdges[i].toString());
-            }
-        }*/
-        //
 
         for (Edge minEdge: minEdges) {
             if (minEdge != null) {
@@ -159,7 +91,7 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         }
     }
 
-    @Override
+
     public void doAlgorithm() {
         while (countTree > 1) {
             algorithmStep();
@@ -173,8 +105,29 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         }
     }
 
-    @Override
     public ArrayList<Edge> getMst() {
         return mst;
     }
+
+    public int getCountTree(){
+        return this.countTree;
+    }
+
+    public AlgorithmMemento save(){
+        return new AlgorithmMemento();
+    }
+
+    public void restore(AlgorithmMemento snap) throws NullPointerException{
+        if (snap.graphStorage == null)
+            throw new NullPointerException();
+        this.graph = snap.graphStorage;
+        this.mst = snap.mstStorage;
+        countVertices = graph.getCountVertices();
+        countEdges = graph.getCountEdges();
+        vertices = graph.getVertices();
+        edges = graph.getEdges();
+        countTree = snap.countTreeStorage;
+    }
+
+
 }
