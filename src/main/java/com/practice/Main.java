@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +18,9 @@ public class Main extends JFrame {
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
+    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    private int counter;
+
     private boolean verticesAdding = false;
 
     public static void main(String[] args) {
@@ -25,22 +31,6 @@ public class Main extends JFrame {
         InitUI();
         this.pack();
         this.setVisible(true);
-
-
-        Graph graph = new Graph();
-        graph.addEdge("a", "b", 1);
-        graph.addEdge("a", "c", 2);
-        graph.addEdge("c", "b", 4);
-        graph.addEdge("b", "d", 3);
-        graph.addEdge("b", "e", 5);
-        graph.addEdge("c", "e", 1);
-        graph.addEdge("e", "d", 5);
-
-        BoruvkaAlg alg = new BoruvkaAlg(graph);
-        Facade facade = new Facade(alg);
-        facade.doAlgorithm();
-        facade.debug();
-        facade.debug();
 
     }
 
@@ -58,6 +48,7 @@ public class Main extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
         mainPanel.add(createLeftPanel());
         mainPanel.add(createRightPanel());
+
         add(mainPanel);
         add(createToolBar(), BorderLayout.WEST);
         add(createStatusPanel(), BorderLayout.SOUTH);
@@ -70,19 +61,26 @@ public class Main extends JFrame {
         statusLabel.setText(offset+msg);
     }
     private Scene createLeftPanel() {
-
-        leftPanel = new Scene(true);
-        
+        leftPanel = new Scene();
+        leftPanel.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mouseClicked( MouseEvent mouseEvent ) {
+                if(verticesAdding) {
+                    Vertex vertex = new Vertex(alphabet[counter], mouseEvent.getX(), mouseEvent.getY(), Color.cyan );
+                    leftPanel.addVertex( vertex );
+                    rightPanel.addVertex( new Vertex(alphabet[counter++], mouseEvent.getX(), mouseEvent.getY(), Color.cyan ) );
+                }
+            }
+        } );
         return leftPanel;
     }
 
     private Scene createRightPanel() {
-        rightPanel = new Scene(false);
+        rightPanel = new Scene();
         rightPanel.setBackground(Color.white);
         rightPanel.setBorder(new LineBorder(new Color(232, 232, 232)));
         return rightPanel;
     }
-
 
     private JPanel createStatusPanel() {
 
@@ -219,9 +217,8 @@ public class Main extends JFrame {
             verticesAdding = !verticesAdding; 
             leftPanel.setVerticesAdding(verticesAdding);
             if( verticesAdding ) {
-
-                statusLabel.setText("Vertices Adding...");
-                addVertex_btn.setBackground(Color.LIGHT_GRAY);
+                updateStatus( "Vertices Adding...");
+                addVertex_btn.setBackground(new Color( 250, 100, 100 ));
             }else {
                 addVertex_btn.setBackground(Color.WHITE);
             }
