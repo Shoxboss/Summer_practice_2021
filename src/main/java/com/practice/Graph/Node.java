@@ -1,4 +1,4 @@
-package com.practice;
+package com.practice.Graph;
 
 public class Node implements Cloneable{
 

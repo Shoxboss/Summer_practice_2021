@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -1,4 +1,4 @@
-package com.practice;
+package com.practice.Utilts;
 
 public class GenerateCommand implements Command{
     //Класс отвечает за генерацию случайного графа

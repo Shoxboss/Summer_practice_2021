@@ -1,4 +1,4 @@
-package com.practice;
+package com.practice.Gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

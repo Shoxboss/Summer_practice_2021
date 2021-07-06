@@ -1,22 +1,26 @@
-package com.practice;
+package com.practice.Gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AboutUs extends JDialog {
+public class Documentation  extends JDialog {
 
     private void InitUI() {
 
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+
         setMinimumSize(new Dimension(600, 400));
         String offset = "        ";
-        JLabel label = new JLabel(offset+"some text");
+        JLabel label = new JLabel(offset+"some Text");
         label.setVerticalAlignment(SwingConstants.CENTER);
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setBackground(Color.lightGray);
-        add(label);
-    }
+        mainPanel.add(label);
+        add(mainPanel);
 
-    public AboutUs() {
+    }
+    public Documentation() {
         InitUI();
         this.pack();
         this.setVisible(true);

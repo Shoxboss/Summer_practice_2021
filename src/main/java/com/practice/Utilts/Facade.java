@@ -1,4 +1,6 @@
-package com.practice;
+package com.practice.Utilts;
+
+import com.practice.Graph.Graph;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,8 @@
-package com.practice;
+package com.practice.Utilts;
+
+import com.practice.Graph.Edge;
+import com.practice.Graph.Graph;
+import com.practice.Graph.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;

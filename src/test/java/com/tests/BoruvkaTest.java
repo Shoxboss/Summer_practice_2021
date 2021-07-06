@@ -1,6 +1,10 @@
 package com.tests;
 
-import com.practice.*;
+import com.practice.Graph.Edge;
+import com.practice.Graph.Graph;
+import com.practice.Graph.Node;
+import com.practice.Utilts.BoruvkaAlg;
+
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 

@@ -1,6 +1,6 @@
 package com.tests;
 
-import com.practice.*;
+import com.practice.Graph.*;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
@@ -82,7 +82,7 @@ public class GraphTest {
 
     @Test
     public void getVerticesTest() {
-        ArrayList<Node> nodes = new ArrayList<>();
+        ArrayList< Node > nodes = new ArrayList<>();
         nodes.add(new Node("a"));
         nodes.add(new Node("b"));
         nodes.add(new Node("c"));
