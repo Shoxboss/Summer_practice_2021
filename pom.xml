@@ -29,16 +29,15 @@
 
     <build>
 
-
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>
         <plugins>
-            <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+
             <plugin>
             <artifactId>maven-clean-plugin</artifactId>
             <version>3.1.0</version>
  
             </plugin>
-            <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+
             <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <version>3.0.2</version>
@@ -62,18 +61,7 @@
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.2</version>
-                <!-- <configuration>
-                    <file>${project.build.directory}\${project.artifactId}-src.zip</file>
-                    <url>${project.distributionManagement.repository.url}</url>
-                    <repositoryId>${project.distributionManagement.repository.id}</repositoryId>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>${project.artifactId}</artifactId>
-                    <version>${project.version}</version>
-                    <packaging>zip</packaging>
-                    <pomFile>pom.xml</pomFile>
-                </configuration> -->
             </plugin>
-            <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
             <plugin>
             <artifactId>maven-site-plugin</artifactId>
             <version>3.7.1</version>
