@@ -1,13 +1,10 @@
 package com.practice;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 
-public class Vertex extends JComponent {
+public class Vertex extends JComponent implements MouseMotionListener, MouseListener {
 
 	private Dimension size;
 	public Color colour;
@@ -18,56 +15,46 @@ public class Vertex extends JComponent {
 
 	protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 
-	public Vertex(  String _id, int _x, int _y, Color _colour ) {
+	public Vertex(  String id, int _x, int _y, Color colour ) {
 		super();
-		id = _id; x = _x; y = _y; colour = _colour;
-
-		size = new Dimension(2*radius, 2*radius);
+		this.id = id;
+		x = _x;
+		y = _y;
+		this.colour = colour;
+		this.size = new Dimension(2*radius, 2*radius);
 		setBounds( x-radius, y-radius, 2*radius, 2*radius );
-		setPreferredSize(size);
-		Font f = new Font("Monospaced", Font.BOLD, radius);
+		setPreferredSize(this.size);
+		setBackground(colour);
+		Font f = new Font("Monospaced", Font.BOLD, radius+10);
 		setFont(f);
 		setCursor( draggingCursor );
-		print( "new Vertex" );
-		addMouseListener( new MouseAdapter() {
-			@Override
-			public void mousePressed( MouseEvent mouseEvent ) {
-				super.mousePressed( mouseEvent );
-					draggedAtX = mouseEvent.getX();
-					draggedAtY = mouseEvent.getY();
-			}
-		} );
-		addMouseMotionListener( new MouseAdapter() {
-			@Override
-
-			public void mouseDragged( MouseEvent mouseEvent ) {
-				super.mouseDragged( mouseEvent );
-				Point newLocation = new Point(mouseEvent.getX() - draggedAtX + getLocation().x, mouseEvent.getY() - draggedAtY + getLocation().y);
-				setLocation(newLocation);
-				print( "mouseDragged" );
-			}
-		} );
+		System.out.println("new Vertex");
+		addMouseListener( this );
+		addMouseMotionListener( this );
 
 	}
 	@Override
-	public void paintComponent(Graphics graphics) {
-		super.paintComponent( graphics );
-		Graphics2D graphics2d= ( Graphics2D ) graphics;
+	public void paintComponent(Graphics g) {
+		super.paintComponent( g );
+		Graphics2D g2 = ( Graphics2D ) g;
 
-		graphics2d.setColor( Color.lightGray );
-		graphics2d.fillOval( 2, 2, 2 * radius-3, 2 * radius-3);
+		g2.setColor( Color.lightGray );
+		g2.fillOval( 0, 0, 2 * radius, 2 * radius );
 
-		graphics2d.setColor(new Color( 0, 159, 153 ));
-		FontMetrics fm = graphics2d.getFontMetrics();
-		int x = ( getWidth() - fm.stringWidth( id ) ) / 2+2;
-		int y = (fm.getAscent() + getHeight())/2-1 ;
-		graphics2d.drawString( id, x, y );
+		g2.setColor( Color.BLACK );
+		FontMetrics fm = g2.getFontMetrics();
+		int x = ( getWidth() - fm.stringWidth( id ) ) / 2;
+		int y = (fm.getAscent() + getHeight())/2 ;
+		g2.drawString( id, x, y );
+		g2.drawString( id, 0, 0 );
+
 	}
 
 	private void print(String... argv) {
 		
         Boolean flag = false;
         if( flag ) {
+
             for( String str: argv ) {
                 System.out.println(str);
             }
@@ -77,5 +64,45 @@ public class Vertex extends JComponent {
 	@Override
 	public Dimension getPreferredSize() {
 		return size;
+	}
+
+	@Override
+	public void mouseDragged( MouseEvent mouseEvent ) {
+
+		Point newLocation = new Point(mouseEvent.getX() - draggedAtX + getLocation().x, mouseEvent.getY() - draggedAtY + getLocation().y);
+		setLocation(newLocation);
+		print( "mouseDragged" );
+	}
+
+
+	@Override
+	public void mouseMoved( MouseEvent mouseEvent ) {
+//		print( "mouseMoved" );
+	}
+
+	@Override
+	public void mouseClicked( MouseEvent mouseEvent ) {
+		print( "mouseClicked" );
+	}
+
+	@Override
+	public void mousePressed( MouseEvent mouseEvent ) {
+		draggedAtX = mouseEvent.getX();
+		draggedAtY = mouseEvent.getY();
+	}
+
+	@Override
+	public void mouseReleased( MouseEvent mouseEvent ) {
+
+	}
+
+	@Override
+	public void mouseEntered( MouseEvent mouseEvent ) {
+
+	}
+
+	@Override
+	public void mouseExited( MouseEvent mouseEvent ) {
+
 	}
 }
