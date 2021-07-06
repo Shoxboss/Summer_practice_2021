@@ -93,7 +93,8 @@ public class Graph implements Cloneable{
         }
         Edge newEdge = new Edge(start, end, w);
         for (Edge edge: edges) {
-            if (edge.getStartName().equals(u) & edge.getEndName().equals(v)) {
+            if ((edge.getStartName().equals(u) & edge.getEndName().equals(v)) ||
+                    (edge.getStartName().equals(v) & edge.getEndName().equals(u))){
                 System.out.println("Такое ребро уже существует");
                 return;
             }

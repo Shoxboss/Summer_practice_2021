@@ -3,48 +3,69 @@ package com.practice;
 import java.util.ArrayList;
 
 public class Facade {
-    private Graph graph;
-    private Algorithm algorithm;
-    private ArrayList<Edge> currentMst;
+    private Graph graph = null;
+    private BoruvkaAlg algorithm;
+    private CareTaker careTaker;
+    private Command command;
 
-    public Facade(Graph graph){
-        this.graph = graph;
-        this.algorithm = new BoruvkaAlg(graph);
-        algorithm.printRes();
-        this.currentMst = algorithm.getMst();
+    public Facade(Algorithm algorithm){
+        this.algorithm = (BoruvkaAlg) algorithm;
+        this.careTaker = new CareTaker(this.algorithm);
     }
 
-    public Memento save(){
-        ArrayList<Edge> cloneMst = new ArrayList<>(currentMst.size());
-        for (Edge edge : currentMst){
-            cloneMst.add((Edge)edge.clone());
-        }
-        return new FacadeMemento(graph, cloneMst);
-    }
-
-    public void executeCommand(Command command){
-        return;
-    }
-
-    public void algorithmStep(){
-        algorithm.algorithmStep();
-        currentMst = algorithm.getMst();
+    public void setCommand(Command command){
+        this.command = command;
     }
 
     public void doAlgorithm() {
-        algorithm.doAlgorithm();
-    }
-
-    //а пробросит ли дальше оно исключение?
-    public void restore(FacadeMemento snap) throws NullPointerException{
-        this.graph = snap.getGraph();
-        this.currentMst = snap.getMst();
-    }
-
-    public void printMst(){
-        System.out.println("Print MST:");
-        for (Edge edge : currentMst){
-            System.out.println(edge);
+        while( algorithm.getCountTree() > 1 ){
+            careTaker.backup();
+            algorithm.algorithmStep();
+            System.out.println("Mst:");
+            algorithm.printRes();
         }
+
     }
+
+    public void debug(){
+        System.out.println("Debug Mst:");
+        careTaker.undo();
+        algorithm.printRes();
+    }
+
+    //вызывается после нажатия кнопки добавления вершины
+    public void addVertexManually(){
+        //вызывается конструктор вершины вершины и она добавляется в граф
+        //вызывается метод отрисовки вершины на сцене
+    }
+
+    //вызывается после нажатия кнопки добавления ребра
+    public void addEdgeManually(){
+        //аналогично вершине
+
+    }
+
+    //вызывается после нажатия кнопки удаления вершины
+    public void removeVertexManually(){
+        //вызывается метод удаления вершины
+        //вызывается метод отрисовки вершины на сцене
+    }
+
+    //вызывается после нажатия кнопки удаления ребра
+    public void removeEdgeManually(){
+        //аналогично вершине
+
+    }
+
+    public void createGraph(){
+        //здесь вызывается одна из команд создания графа
+    }
+
+    public void initBoruvkaAlgorithm(){
+        //создание алгоритма по существующему графу внутри фасада
+    }
+
+
+
+
 }
