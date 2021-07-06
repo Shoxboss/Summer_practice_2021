@@ -18,7 +18,7 @@ public class Main extends JFrame {
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
-    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", " K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
     private int counter;
 
     private boolean verticesAdding = false;
@@ -32,32 +32,6 @@ public class Main extends JFrame {
         this.pack();
         this.setVisible(true);
 
-/* надо выносить в отделено метод
-
-        Graph graph = new Graph();
-        graph.addEdge("a", "b", 1);
-        graph.addEdge("a", "c", 2);
-        graph.addEdge("c", "b", 4);
-        graph.addEdge("b", "d", 3);
-        graph.addEdge("b", "e", 5);
-        graph.addEdge("c", "e", 1);
-        graph.addEdge("e", "d", 5);
-
-        //BoruvkaAlg alg = new BoruvkaAlg(graph);
-        Facade facade = new Facade(graph);
-        CareTaker careTaker = new CareTaker(facade);
-
-        //facade.doAlgorithm();
-        //facade.printMst();
-
-        facade.algorithmStep();
-        careTaker.backup();
-        facade.algorithmStep();
-
-        facade.printMst();
-        careTaker.undo();
-        facade.printMst();
-    */
     }
 
     private void InitUI() {
@@ -230,13 +204,13 @@ public class Main extends JFrame {
     {
         JToolBar toolBar = new JToolBar(1);
 
-        JButton addVertex_btn = new JButton(new ImageIcon("Images/vertex.png"));
-        JButton addRib_btn = new JButton(new ImageIcon("Images/rib.png"));
-        JButton delete_btn = new JButton(new ImageIcon("Images/delete.png"));
-        JButton clear_btn = new JButton(new ImageIcon("Images/trash.png"));
-        JButton back_btn = new JButton(new ImageIcon("Images/back.png"));
-        JButton runStop_btn = new JButton(new ImageIcon("Images/run.png"));
-        JButton forward_btn = new JButton(new ImageIcon("Images/forward.png"));
+        JButton addVertex_btn = new JButton(new ImageIcon("resources/vertex.png"));
+        JButton addRib_btn = new JButton(new ImageIcon("resources/rib.png"));
+        JButton delete_btn = new JButton(new ImageIcon("resources/delete.png"));
+        JButton clear_btn = new JButton(new ImageIcon("resources/trash.png"));
+        JButton back_btn = new JButton(new ImageIcon("resources/back.png"));
+        JButton runStop_btn = new JButton(new ImageIcon("resources/run.png"));
+        JButton forward_btn = new JButton(new ImageIcon("resources/forward.png"));
 
         addVertex_btn.addActionListener( actionEvent -> {
 			
