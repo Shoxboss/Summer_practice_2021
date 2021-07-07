@@ -1,5 +1,8 @@
 package com.practice.Gui;
 
+import com.practice.Graph.*;
+import com.practice.Utilts.*;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -32,6 +35,9 @@ public class Main extends JFrame {
         this.pack();
         this.setVisible(true);
 
+        /*Graph g = new Graph();
+        g.addVertex("a");
+        g.addVertex("a");*/
     }
 
     private void InitUI() {

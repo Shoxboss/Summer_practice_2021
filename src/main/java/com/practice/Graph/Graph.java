@@ -2,12 +2,15 @@ package com.practice.Graph;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Graph implements Cloneable{
     private ArrayList<Node> vertices;
     private ArrayList<Edge> edges;
     private int countVertices;
     private int countEdges;
+    //private static final Logger logger = LogManager.getLogger();
 
     public Graph() {
         vertices = new ArrayList<>();
@@ -24,6 +27,10 @@ public class Graph implements Cloneable{
     }
 
     public int findVertex(String u) {
+        if (u == null) {
+            //logger.fatal("Нельзя найти пустую вершину");
+            throw new IllegalArgumentException("Нельзя найти пустую вершину");
+        }
         for (Node nodes : vertices) {
             if (nodes.getName().equals(u)) {
                 return vertices.indexOf(nodes);
@@ -34,6 +41,7 @@ public class Graph implements Cloneable{
 
     public void addVertex(String v) {
         if (v == null) {
+            //logger.fatal("Нельзя добавить пустую вершину");
             throw new IllegalArgumentException("Нельзя добавить пустую вершину");
         }
         if (findVertex(v) == -1) {
@@ -41,7 +49,7 @@ public class Graph implements Cloneable{
             countVertices++;
         }
         else {
-            System.out.println("Вершина с таким именем уже существует");
+            //logger.warn("Вершина с таким именем уже существует");
         }
     }
 
@@ -64,12 +72,20 @@ public class Graph implements Cloneable{
     }*/
 
     public void addEdge(String u, String v, int w) {
-        if (u == null || v == null) {
-            throw new IllegalArgumentException("Нельзя добавить ребро с пустой вершиной");
+        if (u == null || v == null || w <= 0) {
+            //logger.fatal("Нельзя добавить ребро с пустой вершиной или весом <= 0");
+            throw new IllegalArgumentException("Нельзя добавить ребро с пустой вершиной или весом <= 0");
         }
         if (u.equals(v)) {
-            System.out.println("Начальная и конечная вершины одинаковые");
+            //logger.warn("Начальная и конечная вершины одинаковые");
             return;
+        }
+        for (Edge edge: edges) {
+            if ((edge.getStartName().equals(u) && edge.getEndName().equals(v)) ||
+                    (edge.getStartName().equals(v) && edge.getEndName().equals(u))){
+                //logger.warn("Такое ребро уже существует");
+                return;
+            }
         }
         int indexStart = findVertex(u);
         int indexEnd = findVertex(v);
@@ -92,13 +108,6 @@ public class Graph implements Cloneable{
             countVertices++;
         }
         Edge newEdge = new Edge(start, end, w);
-        for (Edge edge: edges) {
-            if ((edge.getStartName().equals(u) & edge.getEndName().equals(v)) ||
-                    (edge.getStartName().equals(v) & edge.getEndName().equals(u))){
-                System.out.println("Такое ребро уже существует");
-                return;
-            }
-        }
         edges.add(newEdge);
         countEdges++;
         /*if (edges.contains(newEdge)) {
@@ -112,6 +121,7 @@ public class Graph implements Cloneable{
 
     public void removeVertex(String v) {
         if (v == null) {
+            //logger.fatal("Нельзя удалить пустую вершину");
             throw new IllegalArgumentException("Нельзя удалить пустую вершину");
         }
         int nodeIndex = findVertex(v);
@@ -121,20 +131,24 @@ public class Graph implements Cloneable{
             Iterator<Edge> edgeIterator = edges.iterator();
             while (edgeIterator.hasNext()) {
                 Edge edgeNext = edgeIterator.next();
-                if (edgeNext.getStartName().equals(v) | edgeNext.getEndName().equals(v)) {
+                if (edgeNext.getStartName().equals(v) || edgeNext.getEndName().equals(v)) {
                     edgeIterator.remove();
                     countEdges--;
                 }
             }
         }
+        else {
+            //logger.warn("Данной вершины нет в графе");
+        }
     }
 
     public void removeEdge(String start, String end, int w) {
         if (start == null || end == null) {
+            //logger.fatal("Нельзя удалить ребро с пустой вершиной");
             throw new IllegalArgumentException("Нельзя удалить ребро с пустой вершиной");
         }
         if (start.equals(end)) {
-            System.out.println("Начальная и конечная вершины одинаковые");
+            //logger.warn("Начальная и конечная вершины одинаковые");
             return;
         }
         Edge remEdge = new Edge(new Node(start), new Node(end), w);

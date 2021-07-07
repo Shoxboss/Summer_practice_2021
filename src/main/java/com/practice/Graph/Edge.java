@@ -56,10 +56,10 @@ public class Edge implements Cloneable{
             return false;
         }
         if (o instanceof Edge) {
-            if (((start.getName().equals(((Edge) o).getStartName()) &
-                    end.getName().equals(((Edge) o).getEndName())) |
-                    (start.getName().equals(((Edge) o).getEndName()) &
-                            end.getName().equals(((Edge) o).getStartName()))) &
+            if (((start.getName().equals(((Edge) o).getStartName()) &&
+                    end.getName().equals(((Edge) o).getEndName())) ||
+                    (start.getName().equals(((Edge) o).getEndName()) &&
+                            end.getName().equals(((Edge) o).getStartName()))) &&
                     ((Edge)o).getWeight() == weight) {
                 return true;
             }
