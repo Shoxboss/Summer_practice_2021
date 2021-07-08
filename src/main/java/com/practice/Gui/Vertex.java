@@ -21,40 +21,46 @@ public class Vertex extends JComponent {
 	public Vertex(  String _id, int _x, int _y, Color _colour ) {
 		super();
 		id = _id; x = _x; y = _y; colour = _colour;
-
 		size = new Dimension(2*radius, 2*radius);
 		setBounds( x-radius, y-radius, 2*radius, 2*radius );
 		setPreferredSize(size);
 		Font f = new Font("Monospaced", Font.BOLD, radius);
 		setFont(f);
 		setCursor( draggingCursor );
-		print( "new Vertex" );
-		addMouseListener( new MouseAdapter() {
-			@Override
-			public void mousePressed( MouseEvent mouseEvent ) {
-				super.mousePressed( mouseEvent );
-					draggedAtX = mouseEvent.getX();
-					draggedAtY = mouseEvent.getY();
-			}
-		} );
-		addMouseMotionListener( new MouseAdapter() {
-			@Override
-
-			public void mouseDragged( MouseEvent mouseEvent ) {
-				super.mouseDragged( mouseEvent );
-				Point newLocation = new Point(mouseEvent.getX() - draggedAtX + getLocation().x, mouseEvent.getY() - draggedAtY + getLocation().y);
-				setLocation(newLocation);
-				print( "mouseDragged" );
-			}
-		} );
 
 	}
+
+	public Point getCenterPoint( ) {
+		int  x = getX()+getWidth()/2;
+		int  y = getY()+getHeight()/2;
+		return new Point(x, y);
+	}
+
+	public void setDraggingPos( int x, int y ) {
+		draggedAtX = x;
+		draggedAtY = y;
+	}
+	public void chagePos( int x, int y ){
+		Point newLocation = new Point(x - draggedAtX + getLocation().x, y - draggedAtY + getLocation().y);
+		setLocation( newLocation );
+	}
+
+
+	public void setColour( Color colour ) {
+		this.colour = colour;
+		repaint();
+	}
+
+	public Color getColour() {
+		return colour;
+	}
+
 	@Override
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent( graphics );
 		Graphics2D graphics2d= ( Graphics2D ) graphics;
 
-		graphics2d.setColor( Color.lightGray );
+		graphics2d.setColor( colour );
 		graphics2d.fillOval( 2, 2, 2 * radius-3, 2 * radius-3);
 
 		graphics2d.setColor(new Color( 0, 159, 153 ));
@@ -62,16 +68,6 @@ public class Vertex extends JComponent {
 		int x = ( getWidth() - fm.stringWidth( id ) ) / 2+2;
 		int y = (fm.getAscent() + getHeight())/2-1 ;
 		graphics2d.drawString( id, x, y );
-	}
-
-	private void print(String... argv) {
-		
-        Boolean flag = false;
-        if( flag ) {
-            for( String str: argv ) {
-                System.out.println(str);
-            }
-        }
 	}
 
 	@Override
