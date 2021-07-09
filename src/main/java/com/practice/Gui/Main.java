@@ -21,11 +21,13 @@ public class Main extends JFrame {
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
-    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-            "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c",
-            "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
-            "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    private final String[] alphabet = new String[]
+    { 
+        "A", "B", "C", "D", "E", "F", "G", 
+        "H", "I", "J", "K", "L", "M", "N", 
+        "O", "P", "Q", "R", "S", "T", "U", 
+        "V", "W", "X", "Y", "Z"
+    };
     private int counter, s_count;
     private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn;
 
@@ -40,9 +42,8 @@ public class Main extends JFrame {
         NEXT,
         PREV
     }
-
     private Facade facade;
-    Option currentOption = Option.NONE;
+    public static Option currentOption = Option.NONE;
 
     public static void main(String[] args) {
         new Main();
@@ -52,18 +53,7 @@ public class Main extends JFrame {
         InitUI();
         this.pack();
         this.setVisible(true);
-
-
-        facade = new Facade();
-        /*Graph graph = new Graph();
-        graph.addEdge("a", "b", 3);
-        graph.addEdge("b", "c", 4);
-        graph.addEdge("a", "c", 1);
-        facade.setGraph(graph);
-        facade.saveGraph("save.json");
-        facade.setCommand(new LoadCommand("save.json"));
-        facade.createGraph();*/
-        
+        facade = new Facade();        
     }
 
 
@@ -141,6 +131,35 @@ public class Main extends JFrame {
                                 rightPanel.revalidate();
                                 rightPanel.repaint();
                             }
+                            
+                            if (e.getClickCount() == 2 && currentOption != Option.CONNECT ) {
+                                                
+                                String answer = "";
+                                String msg = "напишите новое имя вершины";
+            
+                                int optionPane = JOptionPane.QUESTION_MESSAGE;
+                                
+                                for( int isCurrectName = 0; isCurrectName < 1;  ) {
+                                    
+                                    answer = JOptionPane.showInputDialog(null, msg, "изменить имя вершины", optionPane);
+                                    if(answer == null) {
+                                            return;
+                                    }	
+                                    else if(answer.length() > 2 ) {
+                                        msg = "длина имени вершины не должна превышать 2";
+                                        optionPane = JOptionPane.WARNING_MESSAGE;
+                                        continue;
+                                    }else if(answer.length() == 0 || "".equals(answer) ) {
+                                        msg = "имя вершины не может быть пустым";
+                                        optionPane = JOptionPane.WARNING_MESSAGE;
+                                        continue;
+                                    }
+                                    isCurrectName = 1;
+                                }
+
+                                vertex.setName(answer);
+                                clone.setName(answer);
+                            }
                         }
 
                         @Override
@@ -203,8 +222,7 @@ public class Main extends JFrame {
 
 
     // создать меню файла
-    private JMenu createFileMenu()
-    {
+    private JMenu createFileMenu(){
         // Создание выпадающего меню
         JMenu fileMenu = new JMenu("Файл");
 
@@ -253,7 +271,7 @@ public class Main extends JFrame {
             int option = fileChooser.showSaveDialog(null);
             if(option == JFileChooser.APPROVE_OPTION){
                 try {
-                   /* writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
+                /* writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
                     writer.close();*/
                     if (fileChooser.getSelectedFile().getAbsolutePath().contains(".json")) {
                         facade.saveGraph(fileChooser.getSelectedFile().getAbsolutePath());
@@ -285,7 +303,6 @@ public class Main extends JFrame {
 
         return fileMenu;
     }
-
     // создать строку меню
     private JMenuBar createMenuBar()
     {
@@ -425,11 +442,13 @@ public class Main extends JFrame {
             if(currentOption == Option.CREATE){
                 ChangeCurrentOption(Option.NONE);
                 addVertex_btn.setBackground(Color.WHITE);
-            } else {
+            } 
+            else {
+
                 updateStatus( "Vertices Adding...");
                 ChangeCurrentOption(Option.CREATE);
             }
-            leftPanel.setCurrentOption( currentOption );
+            // leftPanel.setCurrentOption( currentOption );
         });
         addRib_btn.addActionListener( actionEvent -> {
             if(currentOption == Option.CONNECT){
@@ -440,7 +459,7 @@ public class Main extends JFrame {
                 updateStatus( "Ribs Adding...");
                 ChangeCurrentOption(Option.CONNECT);
             }
-            leftPanel.setCurrentOption( currentOption );
+            //  leftPanel.setCurrentOption( currentOption );
         });
         delete_btn.addActionListener( actionEvent -> {
             if(currentOption == Option.DELETE){
@@ -451,7 +470,7 @@ public class Main extends JFrame {
                 updateStatus( "Deleting...");
                 ChangeCurrentOption(Option.DELETE);
             }
-            leftPanel.setCurrentOption( currentOption );
+            // leftPanel.setCurrentOption( currentOption );
         } );
 
         clear_btn.addActionListener( actionEvent -> {
@@ -460,15 +479,18 @@ public class Main extends JFrame {
                 leftPanel.clear();
                 rightPanel.clear();
                 updateStatus( "Clear...");
+                s_count=counter = 0;
+                
                 revalidate();
                 repaint();
-          });
+        });
 
         back_btn.addActionListener( actionEvent -> {
             if( currentOption == Option.PREV ){
 
                 ChangeCurrentOption(Option.NONE);
             }else {
+                
                 if (facade.getGraph() != null){
                     facade.prev();
                     rightPanel.removeRibs();
@@ -483,6 +505,7 @@ public class Main extends JFrame {
 
                 ChangeCurrentOption(Option.NONE);
             }else {
+                
                 if (facade.getGraph() == null) {
                     facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                     facade.createGraph();
@@ -492,7 +515,7 @@ public class Main extends JFrame {
                 facade.next();
                 rightPanel.removeRibs();
                 facade.visualizeAlgorithm(rightPanel);
-                //rightPanel.addRib( leftPanel.getRibList().get(0));
+
                 updateStatus( "Next...");
                 ChangeCurrentOption(Option.NEXT);
             }
@@ -505,6 +528,7 @@ public class Main extends JFrame {
             }else {
                 updateStatus( "Run...");
                 ChangeCurrentOption( Option.RUN );
+                
                 //Added by Mikulik 09.07.2021
                 if (facade.getGraph() == null) {
                     facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
@@ -513,8 +537,6 @@ public class Main extends JFrame {
                 facade.initAlgorithm();
                 facade.doAlgorithm();
                 facade.visualizeAlgorithm(rightPanel);
-
-                //
             }
         });
         toolBar.add(addVertex_btn);
@@ -527,4 +549,5 @@ public class Main extends JFrame {
 
         return toolBar;
     }
+
 }

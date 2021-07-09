@@ -49,6 +49,10 @@ public class Vertex extends JComponent {
 	
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	public void setName(String answer) {
 		id = answer;
 		repaint();

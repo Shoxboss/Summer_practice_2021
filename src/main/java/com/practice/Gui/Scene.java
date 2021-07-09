@@ -1,11 +1,7 @@
 package com.practice.Gui;
 
-
-import com.practice.Graph.Edge;
-
+import com.practice.Graph.*;
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,9 +14,6 @@ public class Scene extends JPanel {
 	private Point from, to;
 	private ArrayList<Rib> ribs;
 	private HashMap<String, Vertex> verticesDict;
-	public Main.Option getCurrentOption() {
-		return currentOption;
-	}
 
 	public ArrayList<Rib> getRibList(){
 		return ribs;
@@ -31,13 +24,6 @@ public class Scene extends JPanel {
 		add(rib.getComponent());
 		repaint();
 	}
-	
-	public void setCurrentOption( Main.Option currentOption ) {
-		this.currentOption = currentOption;
-	}
-
-	Main.Option currentOption = Main.Option.NONE;
-
 
 	Scene() {
 		setOpaque( false );
@@ -58,13 +44,14 @@ public class Scene extends JPanel {
 		} );
 	}
 
+
     public void addVertex( Vertex vertex ){
 
 		vertex.addMouseListener( new MouseAdapter() {
 			@Override
 			public void mouseClicked( MouseEvent e ) {
 				super.mouseClicked( e );
-				if(currentOption == Main.Option.CONNECT) {
+				if(Main.currentOption == Main.Option.CONNECT) {
 
 					if( rib == null ) {
 						to = from = vertex.getCenterPoint();
@@ -74,39 +61,74 @@ public class Scene extends JPanel {
 						validate();
 						repaint();
 
-					} else if( rib.isFull() == false ) {
-
+					} else if( rib.isFull() == false && rib.getSourceVertex() != vertex ) {
 
 						Integer weight = 0;
 						String answer;
-
+						String msg = "напишите вес ребра";
+				
+						int optionPane = JOptionPane.QUESTION_MESSAGE;
+				
 						for( int isNumber = 0; isNumber < 1;  ) {
-
-							answer = JOptionPane.showInputDialog(null, "напишите число",
-									"Вес ребра", JOptionPane.INFORMATION_MESSAGE);
+				
+							answer = JOptionPane.showInputDialog(null, msg,
+									"Вес ребра", optionPane);
+							if(answer == null) {
+								
+								rib.getSourceVertex().setColour( Color.lightGray );
+								rib = null;
+								validate();
+								repaint();
+								return;
+							}	
 							try {
 								weight = Integer.parseInt(answer);
-								isNumber = 1;
+								if( weight != 0 ) {
+									isNumber = 1;
+								}else {
+									msg = "вес ребра должен быть целым числом больше нуля";
+									optionPane = JOptionPane.WARNING_MESSAGE;
+								}
 							}
 							catch (NumberFormatException err)
 							{
+								msg = "вес ребра должно быть целое натуральное число";
+								optionPane = JOptionPane.ERROR_MESSAGE;
 								continue;
 							}
 						}
-
+											
 						to = vertex.getCenterPoint();
 						rib.setTargetVertex( vertex );
 						rib.getSourceVertex().setColour( Color.lightGray );
-						rib.setWeigth( weight );
+						rib.setWeight( weight );
 
-						Board Jc = rib.getComponent();
-
+						JComponent Jc = rib.getComponent();
 						add( Jc );
-						Jc.addMouseListener(new MouseInputAdapter(){
+
+						rib.getSourceVertex().addMouseListener( new MouseAdapter() {
+							@Override
+							public void mouseClicked( MouseEvent e ) {
+								super.mouseClicked( e );
+								if(Main.currentOption == Main.Option.DELETE) {
+									remove( Jc );
+								}							}
+						} );
+						vertex.addMouseListener( new MouseAdapter() {
+							@Override
+							public void mouseClicked( MouseEvent e ) {
+								super.mouseClicked( e );
+								if(Main.currentOption == Main.Option.DELETE) {
+									remove( Jc );
+								}							}
+						} );
+
+						Jc.addMouseListener(new MouseAdapter(){
 						
 							@Override
 							public void mouseClicked(MouseEvent e) {
-								if(currentOption == Main.Option.DELETE) { 
+
+								if(Main.currentOption == Main.Option.DELETE) { 
 									for(int i = 0; i < ribs.size(); i++) {
 										if( ribs.get(i).isConnect( vertex ) ) {
 											ribs.remove(i);
@@ -125,14 +147,11 @@ public class Scene extends JPanel {
 						repaint();
 					}
 				}
-				else if( currentOption == Main.Option.DELETE ) {
+				else if( Main.currentOption == Main.Option.DELETE ) {
 					
 					
 					for(int i = ribs.size()-1; i >= 0; i--) {
 						if( ribs.get(i).isConnect( vertex ) ) {
-							Board Jc =ribs.get(i).getComponent();
-							remove(Jc);
-							repaint();	
 							ribs.remove(i);
 						}	
 					}
@@ -171,7 +190,7 @@ public class Scene extends JPanel {
 		graphics2D.setStroke( new BasicStroke( 3 ) );
 		graphics2D.setColor( Color.cyan );
 
-		if(currentOption == Main.Option.CONNECT && rib != null) {
+		if(Main.currentOption == Main.Option.CONNECT && rib != null) {
 			graphics2D.drawLine( from.x, from.y, to.x, to.y );
 		}
 		for( Rib rib: ribs ) {
@@ -187,10 +206,10 @@ public class Scene extends JPanel {
 	}
 	public void setRibs(ArrayList<Edge> edges){
 		ribs.clear();
-		//ArrayList<Rib> newRibs = new ArrayList<>();
+		
 		for (Edge edge : edges){
 			Rib rib = new Rib();
-			rib.setWeigth(edge.getWeight());
+			rib.setWeight(edge.getWeight());
 			rib.setSourceVertex(verticesDict.get(edge.getStartName()));
 			System.out.println(verticesDict.get(edge.getStartName()).getId());
 			rib.setTargetVertex(verticesDict.get(edge.getEndName()));
@@ -198,9 +217,6 @@ public class Scene extends JPanel {
 			rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
 			this.addRib(rib);
 		}
-		/*revalidate();
-		repaint();*/
-
 	}
 
 	public void removeRibs(){
