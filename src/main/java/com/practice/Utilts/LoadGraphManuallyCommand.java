@@ -20,14 +20,4 @@ public class LoadGraphManuallyCommand implements Command{
         }
         return graph;
     }
-
-    /*@Override
-    public void execute(){
-        return;
-    }
-
-    @Override
-    public Graph execute(String filename) {
-        return new Graph();
-    }*/
 }
