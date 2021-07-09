@@ -6,7 +6,7 @@ import com.practice.Gui.Rib;
 import java.util.ArrayList;
 
 public interface Command {
-    void execute();
-    Graph execute(ArrayList<Rib> ribs);
-    Graph execute(String filename);
+    Graph execute();
+    /*Graph execute(ArrayList<Rib> ribs);
+    Graph execute(String filename);*/
 }

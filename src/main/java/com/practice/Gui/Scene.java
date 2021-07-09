@@ -1,6 +1,8 @@
 package com.practice.Gui;
 
 
+import com.practice.Graph.Edge;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
@@ -8,12 +10,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Scene extends JPanel {
 
 	private Rib rib;
 	private Point from, to;
 	private ArrayList<Rib> ribs;
+	private HashMap<String, Vertex> verticesDict;
 	public Main.Option getCurrentOption() {
 		return currentOption;
 	}
@@ -42,6 +46,7 @@ public class Scene extends JPanel {
 		Font f = new Font("Monospaced", Font.BOLD, 20);
 		setFont(f);
 		ribs = new ArrayList<>();
+		verticesDict = new HashMap<>();
 		addMouseMotionListener( new MouseAdapter() {
 			@Override
 			public void mouseMoved( MouseEvent e ) {
@@ -141,6 +146,7 @@ public class Scene extends JPanel {
 				super.mousePressed( e );
 			}
 		} );
+		verticesDict.put(vertex.getId(), vertex);
 		add(vertex);
         validate();
         repaint();
@@ -175,8 +181,36 @@ public class Scene extends JPanel {
 		}
 
 	}
-	
-	public ArrayList<Rib> getRibs(){
-		return ribs;
+
+	public HashMap<String, Vertex> getVerticesDict(){
+		return verticesDict;
+	}
+	public void setRibs(ArrayList<Edge> edges){
+		ribs.clear();
+		//ArrayList<Rib> newRibs = new ArrayList<>();
+		for (Edge edge : edges){
+			Rib rib = new Rib();
+			rib.setWeigth(edge.getWeight());
+			rib.setSourceVertex(verticesDict.get(edge.getStartName()));
+			System.out.println(verticesDict.get(edge.getStartName()).getId());
+			rib.setTargetVertex(verticesDict.get(edge.getEndName()));
+			System.out.println(verticesDict.get(edge.getEndName()).getId());
+			rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
+			this.addRib(rib);
+		}
+		/*revalidate();
+		repaint();*/
+
+	}
+
+	public void removeRibs(){
+		for(int i = ribs.size()-1; i >= 0; i--) {
+			Board Jc = ribs.get(i).getComponent();
+			remove(Jc);
+			repaint();
+		}
+		ribs.clear();
+		revalidate();
+		repaint();
 	}
 }

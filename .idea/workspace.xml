@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="" />
+    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="Added facade field to main">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunManager" selected="Maven.Summer_practice_2021 [package]">
@@ -85,6 +97,14 @@
       <option name="presentableId" value="Default" />
       <updated>1625551619734</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added facade field to main">
+      <created>1625825470520</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1625825470520</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -98,5 +118,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added facade field to main" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added facade field to main" />
   </component>
 </project>

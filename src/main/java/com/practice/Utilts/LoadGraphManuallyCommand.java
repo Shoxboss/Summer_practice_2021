@@ -5,8 +5,15 @@ import com.practice.Gui.*;
 import java.util.ArrayList;
 
 public class LoadGraphManuallyCommand implements Command{
+
+    private ArrayList<Rib> ribs;
+
+    public LoadGraphManuallyCommand(ArrayList<Rib> ribs){
+        this.ribs = ribs;
+    }
+
     @Override
-    public Graph execute(ArrayList<Rib> ribs){
+    public Graph execute(){
         Graph graph = new Graph();
         for (Rib rib : ribs){
             graph.addEdge(rib.getSourceVertex().getId(), rib.getTargetVertex().getId(), rib.getWeigth().intValue());
@@ -14,7 +21,7 @@ public class LoadGraphManuallyCommand implements Command{
         return graph;
     }
 
-    @Override
+    /*@Override
     public void execute(){
         return;
     }
@@ -22,5 +29,5 @@ public class LoadGraphManuallyCommand implements Command{
     @Override
     public Graph execute(String filename) {
         return new Graph();
-    }
+    }*/
 }

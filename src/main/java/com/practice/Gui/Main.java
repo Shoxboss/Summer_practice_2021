@@ -21,7 +21,11 @@ public class Main extends JFrame {
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
-    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    private final String[] alphabet = new String[]{ "A", "B", "C", "D", "E", "F", "G",
+            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+            "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c",
+            "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+            "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
     private int counter, s_count;
     private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn;
 
@@ -51,14 +55,14 @@ public class Main extends JFrame {
 
 
         facade = new Facade();
-        Graph graph = new Graph();
+        /*Graph graph = new Graph();
         graph.addEdge("a", "b", 3);
         graph.addEdge("b", "c", 4);
         graph.addEdge("a", "c", 1);
         facade.setGraph(graph);
         facade.saveGraph("save.json");
-        facade.setCommand(new LoadCommand());
-        facade.loadGraphFromFile("save.json");
+        facade.setCommand(new LoadCommand("save.json"));
+        facade.createGraph();*/
         
     }
 
@@ -215,6 +219,13 @@ public class Main extends JFrame {
             if(option == JFileChooser.APPROVE_OPTION){
                 File file1 = fileChooser.getSelectedFile();
                 statusLabel.setText("Folder Selected: " + file1.getAbsolutePath() );
+                if (file1.getAbsolutePath().contains(".json")) {
+                    facade.setCommand(new LoadCommand(file1.getAbsolutePath()));
+                    facade.createGraph();
+                } else {
+                    statusLabel.setText("You have chosen file of incorrect format");
+                }
+
             }else{
                 statusLabel.setText("Open command canceled");
             }
@@ -242,10 +253,16 @@ public class Main extends JFrame {
             int option = fileChooser.showSaveDialog(null);
             if(option == JFileChooser.APPROVE_OPTION){
                 try {
-                    writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
-                    writer.close();
-                    JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e) {
+                   /* writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
+                    writer.close();*/
+                    if (fileChooser.getSelectedFile().getAbsolutePath().contains(".json")) {
+                        facade.saveGraph(fileChooser.getSelectedFile().getAbsolutePath());
+                        JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please, choose file of .json format!","File Save went wrong",JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }else{
@@ -452,7 +469,11 @@ public class Main extends JFrame {
 
                 ChangeCurrentOption(Option.NONE);
             }else {
-                
+                if (facade.getGraph() != null){
+                    facade.prev();
+                    rightPanel.removeRibs();
+                    facade.visualizeAlgorithm(rightPanel);
+                }
                 updateStatus( "Prev...");
                 ChangeCurrentOption(Option.PREV);
             }
@@ -462,8 +483,16 @@ public class Main extends JFrame {
 
                 ChangeCurrentOption(Option.NONE);
             }else {
-                
-                rightPanel.addRib( leftPanel.getRibList().get(0));
+                if (facade.getGraph() == null) {
+                    facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                    facade.createGraph();
+                    facade.initAlgorithm();
+                    facade.doAlgorithm();
+                }
+                facade.next();
+                rightPanel.removeRibs();
+                facade.visualizeAlgorithm(rightPanel);
+                //rightPanel.addRib( leftPanel.getRibList().get(0));
                 updateStatus( "Next...");
                 ChangeCurrentOption(Option.NEXT);
             }
@@ -476,6 +505,16 @@ public class Main extends JFrame {
             }else {
                 updateStatus( "Run...");
                 ChangeCurrentOption( Option.RUN );
+                //Added by Mikulik 09.07.2021
+                if (facade.getGraph() == null) {
+                    facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                    facade.createGraph();
+                }
+                facade.initAlgorithm();
+                facade.doAlgorithm();
+                facade.visualizeAlgorithm(rightPanel);
+
+                //
             }
         });
         toolBar.add(addVertex_btn);
