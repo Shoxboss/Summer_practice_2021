@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="Added facade field to main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
