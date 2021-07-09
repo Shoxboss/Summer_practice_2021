@@ -4,6 +4,9 @@ import com.practice.Graph.Edge;
 import com.practice.Graph.Graph;
 import com.practice.Graph.Node;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -122,8 +125,11 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
     }
 
     public void restore(AlgorithmMemento snap) throws NullPointerException{
-        if (snap.graphStorage == null)
+        if (snap.graphStorage == null) {
+            Logger logger = LogManager.getLogger(BoruvkaAlg.class);
+            logger.fatal("Невозможно восстановить состояние алгоритма");
             throw new NullPointerException();
+        }
         this.graph = snap.graphStorage;
         this.mst = snap.mstStorage;
         countVertices = graph.getCountVertices();
