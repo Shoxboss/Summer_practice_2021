@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Graph/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/tests/GraphTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/tests/GraphTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +25,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Maven.Summer_practice_2021 [package]">
     <configuration name="GraphTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Summer_practice_2021" />
       <extension name="coverage">
@@ -49,6 +41,35 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Summer_practice_2021 [package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.GraphTest" />
+      <item itemvalue="Maven.Summer_practice_2021 [package]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.GraphTest" />

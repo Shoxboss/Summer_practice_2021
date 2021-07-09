@@ -82,4 +82,8 @@ public class Vertex extends JComponent {
 	public Dimension getPreferredSize() {
 		return size;
 	}
+	
+	public String getId() {
+		return id;
+	}
 }
