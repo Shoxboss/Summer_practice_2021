@@ -47,7 +47,15 @@ public class Main extends JFrame {
         this.setVisible(true);
 
 
-        Gson gson = new Gson();
+        facade = new Facade();
+        Graph graph = new Graph();
+        graph.addEdge("a", "b", 3);
+        graph.addEdge("b", "c", 4);
+        graph.addEdge("a", "c", 1);
+        facade.setGraph(graph);
+        facade.saveGraph("save.json");
+        facade.setCommand(new LoadCommand());
+        facade.loadGraphFromFile("save.json");
         
     }
 
