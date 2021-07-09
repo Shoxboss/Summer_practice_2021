@@ -1,31 +1,21 @@
 package com.practice.Gui;
 
-
-import com.google.gson.Gson;
-import com.practice.Graph.Graph;
-import com.practice.Graph.Node;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import com.google.gson.Gson;
+
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class Main extends JFrame {
 
-    private JPanel mainPanel;
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
@@ -43,25 +33,22 @@ public class Main extends JFrame {
         STOP,
         NEXT,
         PREV
-    };
-    
+    }
+
     Option currentOption = Option.NONE;
-
-
-    private boolean verticesAdding = false;
 
     public static void main(String[] args) {
         new Main();
     }
+
     public Main() {
         InitUI();
         this.pack();
         this.setVisible(true);
-        Graph g = new Graph();
-        g.addEdge("a", "a", 12);
+
+
         Gson gson = new Gson();
-        String graphJson = gson.toJson(g);
-        System.out.println(graphJson);
+        
     }
 
 
@@ -77,12 +64,12 @@ public class Main extends JFrame {
         setMinimumSize(new Dimension(W/2, H/2));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout( mainPanel, BoxLayout.X_AXIS));
         mainPanel.add(createLeftPanel());
         mainPanel.add(createRightPanel());
 
-        add(mainPanel);
+        add( mainPanel );
         add(createToolBar(), BorderLayout.WEST);
         add(createStatusPanel(), BorderLayout.SOUTH);
         setJMenuBar(createMenuBar());
@@ -104,7 +91,7 @@ public class Main extends JFrame {
             return alphabet[counter++]+s_count;
         }
         return  alphabet[counter++];
-    };
+    }
 
 
     private Scene createLeftPanel() {
@@ -116,21 +103,7 @@ public class Main extends JFrame {
                     // add after full
                     String name = getName();
                     Vertex vertex = new Vertex(name, mouseEvent.getX(), mouseEvent.getY(), Color.lightGray );
-
-                    vertex.addMouseMotionListener( new MouseAdapter() {
-                        @Override
-                        public void mouseDragged( MouseEvent e ) {
-                            super.mouseDragged( e );
-                            vertex.chagePos( e.getX(), e.getY() );
-                            leftPanel.revalidate();
-                            leftPanel.repaint();
-
-                        }
-                        @Override
-                        public void mouseMoved( MouseEvent e ) {
-                            super.mouseMoved( e );
-                        }
-                    } );
+                    Vertex clone =  new Vertex(name, mouseEvent.getX(), mouseEvent.getY(), Color.lightGray );
 
                     vertex.addMouseListener( new MouseAdapter() {
 
@@ -138,6 +111,21 @@ public class Main extends JFrame {
                         public void mouseClicked( MouseEvent e ) {
                             super.mouseClicked( e );
 
+                            if( currentOption == Main.Option.DELETE ) {
+					
+                                ArrayList<Rib> ribs = leftPanel.getRibList();
+                                for(int i = ribs.size()-1; i >= 0; i--) {
+                                    if( ribs.get(i).isConnect( vertex ) ) {
+                                        ribs.remove(i);
+                                    }	
+                                }
+                                leftPanel.remove(vertex);
+                                rightPanel.remove(clone);
+                                leftPanel.revalidate();
+                                leftPanel.repaint();
+                                rightPanel.revalidate();
+                                rightPanel.repaint();
+                            }
                         }
 
                         @Override
@@ -150,27 +138,25 @@ public class Main extends JFrame {
                             super.mouseReleased( mouseEvent );
                             vertex.setColour( Color.lightGray);
                         }
-
                     } );
 
-                    Vertex clone =  new Vertex(name, mouseEvent.getX(), mouseEvent.getY(), Color.lightGray );
-
-                    clone.addMouseMotionListener( new MouseAdapter() {
+                    clone.addMouseMotionListener(new MouseAdapter() {
+	
                         @Override
-                        public void mouseDragged( MouseEvent e ) {
-                            super.mouseDragged( e );
-                            vertex.setLocation( clone.getLocation() );
-                        }
-                    } );
-
-                    vertex.addMouseMotionListener( new MouseAdapter() {
-                        @Override
-                        public void mouseDragged( MouseEvent e ) {
-                            super.mouseDragged( e );
-                            clone.setLocation( vertex.getLocation() );
+                        public void mouseDragged( MouseEvent mouseEvent ) {
+                            vertex.setLocation(clone.getLocation());
+                            revalidate();
+                            repaint();
                         }
                     });
-
+                    vertex.addMouseMotionListener(new MouseAdapter() {
+                        @Override
+                        public void mouseDragged( MouseEvent mouseEvent ) {
+                            clone.setLocation(vertex.getLocation());
+                            revalidate();
+                            repaint();
+                        }
+                    });                    
 
                     leftPanel.addVertex( vertex );
                     rightPanel.addVertex( clone );
@@ -261,9 +247,7 @@ public class Main extends JFrame {
         JMenuItem exit = new JMenuItem("Выход");
 
         // добавить обработчик действия для кнопки "Выход"
-        exit.addActionListener( actionEvent -> {
-            System.exit(0);
-        });
+        exit.addActionListener( actionEvent -> System.exit(0) );
 
         fileMenu.add(read);             // Добавление в меню пункт "Читать из файла"
         fileMenu.add(save);             // Добавление в меню пункт "Сохранить"
@@ -292,19 +276,15 @@ public class Main extends JFrame {
         JMenuItem aboutUs = new JMenuItem("О нас!");
         infoMenu.add(doc);
 
-        doc.addActionListener(actionEvent -> {
-            new Documentation();
-        });
+        doc.addActionListener(actionEvent -> new Documentation() );
 
         infoMenu.add(aboutUs);
 
-        aboutUs.addActionListener(actionEvent -> {
-            new AboutUs();
-        });
+        aboutUs.addActionListener(actionEvent -> new AboutUs() );
         return infoMenu;
     }
 
-    public void ChageCurrentOption( Option option ) {
+    public void ChangeCurrentOption( Option option ) {
 
         switch( option ) {
             case CONNECT:
@@ -394,7 +374,7 @@ public class Main extends JFrame {
             runStop_btn.setBackground(Color.WHITE);      
             forward_btn.setBackground(Color.WHITE); 
             delete_btn.setBackground(Color.WHITE );    
-        };
+        }
 
         currentOption = option;
     }
@@ -414,80 +394,77 @@ public class Main extends JFrame {
 
         addVertex_btn.addActionListener( actionEvent -> {
 			
-            verticesAdding = !verticesAdding; 
-
             if(currentOption == Option.CREATE){
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
                 addVertex_btn.setBackground(Color.WHITE);
             } else {
                 updateStatus( "Vertices Adding...");
-                ChageCurrentOption(Option.CREATE);
+                ChangeCurrentOption(Option.CREATE);
             }
             leftPanel.setCurrentOption( currentOption );
         });
         addRib_btn.addActionListener( actionEvent -> {
             if(currentOption == Option.CONNECT){
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
             
             } 
             else {
                 updateStatus( "Ribs Adding...");
-                ChageCurrentOption(Option.CONNECT);
+                ChangeCurrentOption(Option.CONNECT);
             }
             leftPanel.setCurrentOption( currentOption );
         });
         delete_btn.addActionListener( actionEvent -> {
             if(currentOption == Option.DELETE){
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
                 
             } else {
 
                 updateStatus( "Deleting...");
-                ChageCurrentOption(Option.DELETE);
+                ChangeCurrentOption(Option.DELETE);
             }
             leftPanel.setCurrentOption( currentOption );
         } );
 
         clear_btn.addActionListener( actionEvent -> {
-            if( currentOption == Option.CLEAR ){
-
-                ChageCurrentOption(Option.NONE);
-            
-            }
-            else {
+                ChangeCurrentOption(Option.NONE);
                 
+                leftPanel.clear();
+                rightPanel.clear();
                 updateStatus( "Clear...");
-                ChageCurrentOption(Option.CLEAR);
-            }
-        });
+                revalidate();
+                repaint();
+          });
 
         back_btn.addActionListener( actionEvent -> {
             if( currentOption == Option.PREV ){
 
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
             }else {
                 
                 updateStatus( "Prev...");
-                ChageCurrentOption(Option.PREV);
+                ChangeCurrentOption(Option.PREV);
             }
         });
         forward_btn.addActionListener( actionEvent -> {
             if( currentOption == Option.NEXT ){
 
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
             }else {
                 
+                rightPanel.addRib( leftPanel.getRibList().get(0));
                 updateStatus( "Next...");
-                ChageCurrentOption(Option.NEXT);
+                ChangeCurrentOption(Option.NEXT);
             }
         });
+
         runStop_btn.addActionListener( actionEvent -> {
             if( currentOption == Option.RUN || currentOption == Option.STOP  ){
 
-                ChageCurrentOption(Option.NONE);
+                ChangeCurrentOption(Option.NONE);
             }else {
                 updateStatus( "Run...");
-                ChageCurrentOption( Option.RUN );
+                ChangeCurrentOption( Option.RUN );
             }
         });
         toolBar.add(addVertex_btn);

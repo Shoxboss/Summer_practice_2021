@@ -1,17 +1,36 @@
 package com.practice.Gui;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class Rib extends JComponent {
+import javax.swing.JComponent;
+
+public class Rib {
 
 	private Vertex sourceVertex, targetVertex;
 	private Integer weigth;
-
+	private Board component;
+	
 	public Rib() {
 		sourceVertex = targetVertex = null;
+	}
+
+	public Board getComponent() {
+
+		if(component == null) {
+			component = new Board(weigth.toString(),
+			(sourceVertex.getX() + targetVertex.getX())/2, 
+			(sourceVertex.getY() + targetVertex.getY())/2);
+		}
+		return component;
+	}
+
+	public void setComponent(Board component) {
+		this.component = component;
+	}
+
+	public boolean isConnect(Vertex vertex) {
+
+		return sourceVertex == vertex || targetVertex == vertex;
 	}
 
 	public Vertex getSourceVertex() {
@@ -28,6 +47,7 @@ public class Rib extends JComponent {
 
 	public void setTargetVertex( Vertex targetVertex ) {
 		this.targetVertex = targetVertex;
+
 	}
 
 	public boolean isFull() {
@@ -36,7 +56,10 @@ public class Rib extends JComponent {
 
 	public Integer getWeigth() { return weigth; }
 
-	public void setWeigth( Integer weigth ) { this.weigth = weigth; }
+	public void setWeigth( Integer weigth ) { 
+		
+		this.weigth = weigth;
+	}
 
 	public void setNode( Vertex node ) {
 		if( sourceVertex == null ) {
@@ -55,7 +78,8 @@ public class Rib extends JComponent {
 	}
 
 	public Point[] getLine() {
+		component.setLocation(	(sourceVertex.getX() + targetVertex.getX())/2, 
+								(sourceVertex.getY() + targetVertex.getY())/2 );
 		return new Point[]{ getCenterPoint( sourceVertex ), getCenterPoint( targetVertex ) };
 	}
-
 }

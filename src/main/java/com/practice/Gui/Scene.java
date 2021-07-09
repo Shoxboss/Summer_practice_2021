@@ -1,19 +1,16 @@
 package com.practice.Gui;
 
-import com.practice.Graph.Node;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 public class Scene extends JPanel {
 
-    private boolean verticesAdding = false;
 	private Rib rib;
 	private Point from, to;
 	private ArrayList<Rib> ribs;
@@ -21,6 +18,16 @@ public class Scene extends JPanel {
 		return currentOption;
 	}
 
+	public ArrayList<Rib> getRibList(){
+		return ribs;
+	}
+
+	public void addRib( Rib rib ) {
+		ribs.add(rib);
+		add(rib.getComponent());
+		repaint();
+	}
+	
 	public void setCurrentOption( Main.Option currentOption ) {
 		this.currentOption = currentOption;
 	}
@@ -36,11 +43,6 @@ public class Scene extends JPanel {
 		setFont(f);
 		ribs = new ArrayList<>();
 		addMouseMotionListener( new MouseAdapter() {
-			@Override
-			public void mouseDragged( MouseEvent e ) {
-				super.mouseDragged( e );
-			}
-
 			@Override
 			public void mouseMoved( MouseEvent e ) {
 				super.mouseMoved( e );
@@ -69,7 +71,7 @@ public class Scene extends JPanel {
 
 					} else if( rib.isFull() == false ) {
 
-						/*  there is some code that must be redo  */
+
 						Integer weight = 0;
 						String answer;
 
@@ -87,19 +89,53 @@ public class Scene extends JPanel {
 							}
 						}
 
-
 						to = vertex.getCenterPoint();
 						rib.setTargetVertex( vertex );
 						rib.getSourceVertex().setColour( Color.lightGray );
 						rib.setWeigth( weight );
+
+						Board Jc = rib.getComponent();
+
+						add( Jc );
+						Jc.addMouseListener(new MouseInputAdapter(){
+						
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								if(currentOption == Main.Option.DELETE) { 
+									for(int i = 0; i < ribs.size(); i++) {
+										if( ribs.get(i).isConnect( vertex ) ) {
+											ribs.remove(i);
+											break;
+										}	
+									}			
+									remove(Jc);
+									repaint();						
+								}
+							}
+						});
+
 						ribs.add( rib );
 						rib = null;
 						validate();
 						repaint();
 					}
 				}
+				else if( currentOption == Main.Option.DELETE ) {
+					
+					
+					for(int i = ribs.size()-1; i >= 0; i--) {
+						if( ribs.get(i).isConnect( vertex ) ) {
+							Board Jc =ribs.get(i).getComponent();
+							remove(Jc);
+							repaint();	
+							ribs.remove(i);
+						}	
+					}
+					remove(vertex);      
+					revalidate();
+					repaint();
+				}
 			}
-
 			@Override
 			public void mousePressed( MouseEvent e ) {
 				super.mousePressed( e );
@@ -110,9 +146,12 @@ public class Scene extends JPanel {
         repaint();
     }
 
-    public void setVerticesAdding (boolean flag) {
-        verticesAdding = flag;
-    }
+	public void clear() {
+		removeAll();
+		ribs.clear();
+		revalidate();
+		repaint();
+	}
 
 	@Override
 	public Dimension getPreferredSize() {
@@ -130,12 +169,9 @@ public class Scene extends JPanel {
 			graphics2D.drawLine( from.x, from.y, to.x, to.y );
 		}
 		for( Rib rib: ribs ) {
+
 			graphics2D.setColor( Color.cyan );
 			graphics2D.drawLine( rib.getLine()[0].x,rib.getLine()[0].y, rib.getLine()[1].x,rib.getLine()[1].y );
-
-			graphics2D.setColor( Color.RED );
-			graphics2D.drawString( ""+rib.getWeigth(), (rib.getLine()[0].x+rib.getLine()[1].x)/2, (rib.getLine()[0].y+rib.getLine()[1].y)/2 );
-
 		}
 
 	}

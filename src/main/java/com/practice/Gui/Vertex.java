@@ -1,11 +1,8 @@
 package com.practice.Gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Vertex extends JComponent {
 
@@ -28,6 +25,27 @@ public class Vertex extends JComponent {
 		setFont(f);
 		setCursor( draggingCursor );
 
+		addMouseListener( new MouseAdapter() {
+			@Override
+			public void mousePressed( MouseEvent mouseEvent ) {
+				super.mousePressed( mouseEvent );
+
+				draggedAtX = mouseEvent.getX();
+				draggedAtY = mouseEvent.getY();
+			}
+		});
+
+		addMouseMotionListener( new MouseAdapter() {
+	
+			@Override
+			public void mouseDragged( MouseEvent mouseEvent ) {
+				
+				super.mouseDragged( mouseEvent );
+				Point newLocation = new Point(mouseEvent.getX() - draggedAtX + getLocation().x, mouseEvent.getY() - draggedAtY + getLocation().y);
+				setLocation(newLocation);
+			}
+		} );
+	
 	}
 
 	public Point getCenterPoint( ) {
@@ -35,16 +53,6 @@ public class Vertex extends JComponent {
 		int  y = getY()+getHeight()/2;
 		return new Point(x, y);
 	}
-
-	public void setDraggingPos( int x, int y ) {
-		draggedAtX = x;
-		draggedAtY = y;
-	}
-	public void chagePos( int x, int y ){
-		Point newLocation = new Point(x - draggedAtX + getLocation().x, y - draggedAtY + getLocation().y);
-		setLocation( newLocation );
-	}
-
 
 	public void setColour( Color colour ) {
 		this.colour = colour;
