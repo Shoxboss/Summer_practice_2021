@@ -19,7 +19,11 @@ public class Board extends JComponent {
 		Font f = new Font("Monospaced", Font.BOLD, 20);
 		setFont(f);
 		setCursor( draggingCursor );
+	}
 
+	public void setName(String str) {
+		name = str;
+		repaint();
 	}
 
 	@Override
@@ -35,6 +39,7 @@ public class Board extends JComponent {
 		
 		graphics2d.drawString( name, lx, ly );
 	}
+
 	@Override
 	public Dimension getPreferredSize() {
 		return size;

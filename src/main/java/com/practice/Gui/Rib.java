@@ -1,27 +1,64 @@
 package com.practice.Gui;
 
+import javax.swing.*;
 import java.awt.*;
-
-import javax.swing.JComponent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Rib {
 
 	private Vertex sourceVertex, targetVertex;
-	private Integer weigth;
+	private Integer weight;
 	private Board component;
 	
 	public Rib() {
 		sourceVertex = targetVertex = null;
+		component = new Board("0", 0, 0);
+
+		component.addMouseListener(new MouseAdapter(){
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if (e.getClickCount() == 2 ) {
+					Integer weight = 0;
+					String answer;
+					String msg = "напишите вес ребра";
+
+					int optionPane = JOptionPane.QUESTION_MESSAGE;
+
+					for( int isNumber = 0; isNumber < 1;  ) {
+
+						answer = JOptionPane.showInputDialog(null, msg,
+								"Вес ребра", optionPane);
+						if(answer == null) {
+							return;
+						}	
+						try {
+							weight = Integer.parseInt(answer);
+							if( weight != 0 ) {
+								isNumber = 1;
+							}else {
+								msg = "вес ребра должен быть целым числом больше нуля";
+								optionPane = JOptionPane.WARNING_MESSAGE;
+							}
+						}
+						catch (NumberFormatException err)
+						{
+							msg = "вес ребра должно быть целое натуральное число";
+							optionPane = JOptionPane.ERROR_MESSAGE;
+							continue;
+						}
+					}
+					setWeight(weight);
+				}
+			}
+		});
+
 	}
 
 	public Board getComponent() {
-
-		if(component == null) {
-			component = new Board(weigth.toString(),
-			(sourceVertex.getX() + targetVertex.getX())/2, 
-			(sourceVertex.getY() + targetVertex.getY())/2);
-		}
-		return component;
+		return component;	
 	}
 
 	public void setComponent(Board component) {
@@ -46,19 +83,23 @@ public class Rib {
 	}
 
 	public void setTargetVertex( Vertex targetVertex ) {
+	
 		this.targetVertex = targetVertex;
-
+		int _x = (sourceVertex.getX() + targetVertex.getX())/2;
+		int _y = (sourceVertex.getY() + targetVertex.getY())/2;
+		component.setLocation( _x, _y );
 	}
 
 	public boolean isFull() {
 		return sourceVertex != null && targetVertex != null;
 	}
 
-	public Integer getWeigth() { return weigth; }
+	public Integer getWeight() { return weight; }
 
-	public void setWeigth( Integer weigth ) { 
-		
-		this.weigth = weigth;
+	public void setWeight( Integer weight ) { 
+	
+		this.weight = weight;
+		component.setName(weight.toString());
 	}
 
 	public void setNode( Vertex node ) {
@@ -68,6 +109,9 @@ public class Rib {
 		}
 		else {
 			targetVertex = node;
+			int _x = (sourceVertex.getX() + targetVertex.getX())/2;
+			int _y = (sourceVertex.getY() + targetVertex.getY())/2;
+			component.setLocation( _x, _y );
 		}
 	}
 

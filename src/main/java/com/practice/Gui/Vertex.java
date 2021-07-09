@@ -35,6 +35,7 @@ public class Vertex extends JComponent {
 			}
 		});
 
+
 		addMouseMotionListener( new MouseAdapter() {
 	
 			@Override
@@ -46,6 +47,11 @@ public class Vertex extends JComponent {
 			}
 		} );
 	
+	}
+
+	public void setName(String answer) {
+		id = answer;
+		repaint();
 	}
 
 	public Point getCenterPoint( ) {
@@ -81,9 +87,5 @@ public class Vertex extends JComponent {
 	@Override
 	public Dimension getPreferredSize() {
 		return size;
-	}
-	
-	public String getId() {
-		return id;
 	}
 }
