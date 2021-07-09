@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true">
+<Configuration status="info" strict="true">
     <Filter type="ThresholdFilter" level="trace" />
 
     <Appenders>
@@ -22,7 +22,7 @@
 
     <Loggers>
         <Root level="INFO">
-            <AppenderRef ref="STDOUT" />
+            <<!-- <AppenderRef ref="STDOUT" /> -->
             <AppenderRef ref="rollingFile" />
         </Root>
     </Loggers>
