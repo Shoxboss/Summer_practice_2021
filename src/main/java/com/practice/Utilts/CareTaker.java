@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class CareTaker {
     private BoruvkaAlg originator;
     private ArrayList<BoruvkaAlg.AlgorithmMemento> history;
-    private int cur = -1;
-    private int startIndex = 0;
+    //private int cur = -1;
+    //private int startIndex = 0;
+    private int prevIndex = -2;
+    private int nextIndex = 1;
 
     public CareTaker(BoruvkaAlg algorithm){
         originator = algorithm;
@@ -18,13 +20,17 @@ public class CareTaker {
 
     public void backup(){
         history.add(originator.save());
-        cur++;
+        //cur++;
+        prevIndex++;
     }
 
     public void stepNextMemento(){
-        if (startIndex >= 0 & startIndex < history.size() && history.size() > 0){
-            BoruvkaAlg.AlgorithmMemento snap = history.get(startIndex);
-            startIndex++;
+        if (nextIndex >= 0 & nextIndex < history.size() && history.size() > 0){
+            BoruvkaAlg.AlgorithmMemento snap = history.get(nextIndex);
+            //
+            prevIndex = nextIndex - 1;
+            //
+            nextIndex++;
             try {
                 originator.restore(snap);
             } catch (Exception e){
@@ -35,16 +41,16 @@ public class CareTaker {
     }
 
     public void undo(){
-        if (cur >= 0 & cur < history.size() & history.size() > 0) {
-             BoruvkaAlg.AlgorithmMemento snap = history.get(cur);
-             cur--;
-             startIndex = cur;
-             try {
-                 originator.restore(snap);
-             } catch (Exception e){
-                 Logger logger = LogManager.getLogger(CareTaker.class);
-                 logger.error("Restore went wrong");
-             }
+        if (prevIndex >= 0 & prevIndex < history.size() & history.size() > 0) {
+            BoruvkaAlg.AlgorithmMemento snap = history.get(prevIndex);
+            nextIndex = prevIndex + 1;
+            prevIndex--;
+            try {
+                originator.restore(snap);
+            } catch (Exception e){
+                Logger logger = LogManager.getLogger(CareTaker.class);
+                logger.error("Restore went wrong");
+            }
         }
     }
 }
