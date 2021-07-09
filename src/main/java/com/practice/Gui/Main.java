@@ -5,6 +5,8 @@ import javax.swing.border.LineBorder;
 
 import com.google.gson.Gson;
 
+import com.practice.Graph.*;
+import com.practice.Utilts.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedWriter;
@@ -35,6 +37,7 @@ public class Main extends JFrame {
         PREV
     }
 
+    private Facade facade;
     Option currentOption = Option.NONE;
 
     public static void main(String[] args) {
