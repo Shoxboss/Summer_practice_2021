@@ -175,4 +175,8 @@ public class Scene extends JPanel {
 		}
 
 	}
+	
+	public ArrayList<Rib> getRibs(){
+		return ribs;
+	}
 }
