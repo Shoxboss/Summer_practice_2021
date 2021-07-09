@@ -1,5 +1,8 @@
 package com.practice.Utilts;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class CareTaker {
@@ -25,7 +28,8 @@ public class CareTaker {
             try {
                 originator.restore(snap);
             } catch (Exception e){
-                System.out.println("Restore went wrong");
+                Logger logger = LogManager.getLogger(CareTaker.class);
+                logger.error("Restore went wrong");
             }
         }
     }
@@ -38,7 +42,8 @@ public class CareTaker {
              try {
                  originator.restore(snap);
              } catch (Exception e){
-                 System.out.println("Restore went wrong");
+                 Logger logger = LogManager.getLogger(CareTaker.class);
+                 logger.error("Restore went wrong");
              }
         }
     }

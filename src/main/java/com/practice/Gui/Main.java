@@ -149,7 +149,7 @@ public class Main extends JFrame {
                                         msg = "длина имени вершины не должна превышать 2";
                                         optionPane = JOptionPane.WARNING_MESSAGE;
                                         continue;
-                                    }else if(answer.length() == 0 || "".equals(answer) ) {
+                                    }else if(answer.length() == 0 || " ".equals(answer) || "  ".equals(answer)) {
                                         msg = "имя вершины не может быть пустым";
                                         optionPane = JOptionPane.WARNING_MESSAGE;
                                         continue;
