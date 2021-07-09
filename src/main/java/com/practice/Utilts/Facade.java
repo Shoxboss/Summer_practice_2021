@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.practice.Graph.Edge;
 import com.practice.Graph.Graph;
 import com.practice.Gui.Rib;
+import com.practice.Gui.Scene;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -48,7 +49,7 @@ public class Facade {
             System.out.println("Mst:");
             algorithm.printRes();
         }
-
+        careTaker.backup();
     }
 
     public void debug(){
@@ -81,14 +82,15 @@ public class Facade {
 
     }
 
-    public void loadGraphFromFile(String filename){
+    /*public void loadGraphFromFile(String filename){
         this.graph = command.execute(filename);
+
+    }*/
+
+    public void createGraph(){
+        this.graph = command.execute();
         graph.printEdges();
         graph.printVertices();
-    }
-
-    public void createGraph(ArrayList<Rib> ribs){
-        this.graph = command.execute(ribs);
         //здесь вызывается одна из команд создания графа
     }
 
@@ -98,6 +100,10 @@ public class Facade {
 
     public void prev(){
         this.careTaker.undo();
+    }
+
+    public void next() {
+        this.careTaker.stepNextMemento();
     }
 
     //Debug
@@ -119,6 +125,14 @@ public class Facade {
         } catch (IOException e){
 
         }
+    }
+
+    public void visualizeAlgorithm(Scene scene){
+        scene.setRibs(algorithm.getMst());
+    }
+
+    public Graph getGraph(){
+        return graph;
     }
 
 }

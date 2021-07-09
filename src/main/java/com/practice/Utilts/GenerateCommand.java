@@ -8,11 +8,11 @@ import java.util.ArrayList;
 public class GenerateCommand implements Command{
     //Класс отвечает за генерацию случайного графа
     @Override
-    public void execute(){
-        return;
+    public Graph execute(){
+        return new Graph();
     }
 
-    @Override
+   /* @Override
     public Graph execute(ArrayList<Rib> ribs){
         return new Graph();
     }
@@ -20,5 +20,5 @@ public class GenerateCommand implements Command{
     @Override
     public Graph execute(String filename) {
         return new Graph();
-    }
+    }*/
 }
