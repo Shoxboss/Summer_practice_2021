@@ -1,7 +1,11 @@
 package com.practice.Gui;
 
 
+import com.google.gson.Gson;
+import com.practice.Graph.Graph;
 import com.practice.Graph.Node;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -53,6 +57,11 @@ public class Main extends JFrame {
         InitUI();
         this.pack();
         this.setVisible(true);
+        Graph g = new Graph();
+        g.addEdge("a", "a", 12);
+        Gson gson = new Gson();
+        String graphJson = gson.toJson(g);
+        System.out.println(graphJson);
     }
 
 
