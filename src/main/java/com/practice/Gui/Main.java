@@ -491,27 +491,17 @@ public class Main extends JFrame {
         });
 
         back_btn.addActionListener( actionEvent -> {
-            if( currentOption == Option.PREV ){
-
-                ChangeCurrentOption(Option.NONE);
-            }else {
-                
-                if (facade.getGraph() != null){
-                    facade.prev();
-                    rightPanel.removeRibs();
-                    facade.visualizeAlgorithm(rightPanel);
-                }
-                updateStatus( "Prev...");
-                ChangeCurrentOption(Option.PREV);
+           if (facade.getGraph() != null){
+                facade.prev();
+                rightPanel.removeRibs();
+                facade.visualizeAlgorithm(rightPanel);
             }
+            updateStatus( "Prev...");
+            ChangeCurrentOption(Option.PREV);
+            ChangeCurrentOption(Option.NONE);
         });
         forward_btn.addActionListener( actionEvent -> {
-            if( currentOption == Option.NEXT ){
-
-                ChangeCurrentOption(Option.NONE);
-            }else {
-                
-                if (facade.getGraph() == null) {
+             if (facade.getGraph() == null) {
                     facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                     facade.createGraph();
                     facade.initAlgorithm();
@@ -520,10 +510,10 @@ public class Main extends JFrame {
                 facade.next();
                 rightPanel.removeRibs();
                 facade.visualizeAlgorithm(rightPanel);
-
                 updateStatus( "Next...");
+
                 ChangeCurrentOption(Option.NEXT);
-            }
+                ChangeCurrentOption(Option.NONE);
         });
 
         runStop_btn.addActionListener( actionEvent -> {
