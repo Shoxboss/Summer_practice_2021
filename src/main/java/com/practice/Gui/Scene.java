@@ -195,7 +195,7 @@ public class Scene extends JPanel {
 		}
 		for( Rib rib: ribs ) {
 
-			graphics2D.setColor( rib.getColor() );
+			graphics2D.setColor( Color.cyan /*rib.getColor()*/ );
 			graphics2D.drawLine( rib.getLine()[0].x,rib.getLine()[0].y, rib.getLine()[1].x,rib.getLine()[1].y );
 		}
 
@@ -216,7 +216,7 @@ public class Scene extends JPanel {
 			System.out.println(verticesDict.get(edge.getEndName()).getId());
 			rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
 			
-			rib.setColor( Math.min(edge.getEnd().getComponent(), edge.getStart().getComponent()));
+			//rib.setColor( Math.min(edge.getEnd().getComponent(), edge.getStart().getComponent()));
 			
 			this.addRib(rib);
 		}
