@@ -10,6 +10,9 @@ public class Rib {
 	private Vertex sourceVertex, targetVertex;
 	private Integer weight;
 	private Board component;
+	private Color[] colors = {Color.CYAN, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
+
+	private Color color = Color.CYAN;
 	
 	public Rib() {
 		sourceVertex = targetVertex = null;
@@ -57,6 +60,14 @@ public class Rib {
 
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(int index) {
+		this.color = colors[index];
+	}
+	
 	public Board getComponent() {
 		return component;	
 	}
