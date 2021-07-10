@@ -119,12 +119,14 @@
                                         <include>**/*.properties</include>
                                     </includes>
                                 </resource>
-                                <resource>
-                                    <directory>src/main/resources/Images</directory>
+                                <!-- <resource>
+                                    <directory>
+                                        src/main/resources/Images
+                                    </directory>
                                     <includes>
                                         <include>**/*.png</include>
                                     </includes>
-                                </resource>
+                                </resource> -->
                             </resources>
                         </configuration>
                     </execution>
@@ -157,7 +159,6 @@
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
         </plugins>
         <!--</pluginManagement>-->

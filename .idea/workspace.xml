@@ -4,25 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="Added facade field to main">
+    <list default="true" id="f1304bb5-3c1b-413f-a1e6-0b4cd2826052" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Gui/Scene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/CareTaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/Facade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/GenerateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/LoadGraphManuallyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practice/Utilts/VisualizeCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
+    <option name="jreName" value="11" />
+    <option name="runMavenInBackground" value="false" />
+    <option name="vmOptions" value="package" />
   </component>
   <component name="ProjectId" id="1uvgkM0YAQs2j4MIvg6dYDhGQmQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -32,12 +34,20 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.7" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.1803681" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
-  <component name="RunManager" selected="Maven.Summer_practice_2021 [package]">
+  <component name="RunManager">
     <configuration name="GraphTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Summer_practice_2021" />
       <extension name="coverage">
@@ -53,35 +63,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Summer_practice_2021 [package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="package" />
-              </list>
-            </option>
-            <option name="pomFileName" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="JUnit.GraphTest" />
-      <item itemvalue="Maven.Summer_practice_2021 [package]" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.GraphTest" />
@@ -97,14 +78,6 @@
       <option name="presentableId" value="Default" />
       <updated>1625551619734</updated>
     </task>
-    <task id="LOCAL-00001" summary="Added facade field to main">
-      <created>1625825470520</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1625825470520</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,9 +91,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added facade field to main" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added facade field to main" />
   </component>
 </project>
