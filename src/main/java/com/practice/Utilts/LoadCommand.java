@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.practice.Graph.Edge;
 import com.practice.Graph.Graph;
+import com.practice.Graph.Node;
 import com.practice.Gui.Rib;
 
 import java.io.IOException;
@@ -39,9 +40,17 @@ public class LoadCommand implements Command{
             String graphJson = Files.readString(Path.of(filename));
             graph = gson.fromJson(graphJson, Graph.class);
 
+            ArrayList<Node> nodes = graph.getVertices();
             ArrayList<Edge> edges = graph.getEdges();
             for (Edge edge : edges){
                 cloneGraph.addEdge(edge.getStartName(), edge.getEndName(), edge.getWeight());
+                Edge lastEdge = cloneGraph.getEdges().get(cloneGraph.getCountEdges() - 1);
+                Node start = lastEdge.getStart();
+                Node end = lastEdge.getEnd();
+                start.setX(edge.getStart().getX());
+                start.setY(edge.getStart().getY());
+                end.setX(edge.getEnd().getX());
+                end.setY(edge.getEnd().getY());
             }
         } catch (IOException e){
 

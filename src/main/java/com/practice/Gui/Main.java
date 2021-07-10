@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class Main extends JFrame {
 
+    static Boolean isRedactorModeOn = true;
     private Scene leftPanel;
     private Scene rightPanel;
     private JLabel statusLabel;
@@ -29,7 +30,7 @@ public class Main extends JFrame {
         "V", "W", "X", "Y", "Z"
     };
     private int counter, s_count;
-    private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn;
+    private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn, redactor_btn, generate_btn;
 
     enum Option {
         NONE,
@@ -135,7 +136,7 @@ public class Main extends JFrame {
                                 rightPanel.repaint();
                             }
                             
-                            if (e.getClickCount() == 2 && currentOption != Option.CONNECT ) {
+                            if (e.getClickCount() == 2 && currentOption != Option.CONNECT && isRedactorModeOn) {
                                                 
                                 String answer = "";
                                 String msg = "напишите новое имя вершины";
@@ -203,6 +204,124 @@ public class Main extends JFrame {
         return leftPanel;
     }
 
+    public void setVerticesWhileLoading(ArrayList<Node> nodes){
+        leftPanel.clear();
+        rightPanel.clear();
+        //updateStatus( "Clear...");
+        s_count=counter = 0;
+        revalidate();
+        repaint();
+
+        for (Node node : nodes){
+            Vertex vertex = new Vertex(node.getName(), node.getX(), node.getY(), Color.lightGray);
+            Vertex clone = new Vertex(node.getName(), node.getX(), node.getY(), Color.lightGray);
+            vertex.setLocation(vertex.getLocation());
+            clone.setLocation(vertex.getLocation());
+            //leftPanel.addMouseListener( new MouseAdapter() {
+            //    @Override
+            //    public void mouseClicked( MouseEvent mouseEvent ) {
+                    //if(currentOption == Option.CREATE) {
+                        // add after full
+                       // String name = getName();
+                       // Vertex vertex = new Vertex(name, mouseEvent.getX(), mouseEvent.getY(), Color.lightGray );
+                       // Vertex clone =  new Vertex(name, mouseEvent.getX(), mouseEvent.getY(), Color.lightGray );
+
+            vertex.addMouseListener( new MouseAdapter() {
+
+                @Override
+                public void mouseClicked( MouseEvent e ) {
+                    super.mouseClicked( e );
+
+                    if( currentOption == Main.Option.DELETE ) {
+
+                        ArrayList<Rib> ribs = leftPanel.getRibList();
+                        for(int i = ribs.size()-1; i >= 0; i--) {
+                            if( ribs.get(i).isConnect( vertex ) ) {
+                                ribs.remove(i);
+                            }
+                        }
+                        leftPanel.remove(vertex);
+                        rightPanel.remove(clone);
+                        leftPanel.revalidate();
+                        leftPanel.repaint();
+                        rightPanel.revalidate();
+                        rightPanel.repaint();
+                    }
+
+                    if (e.getClickCount() == 2 && currentOption != Option.CONNECT && isRedactorModeOn) {
+
+                        String answer = "";
+                        String msg = "напишите новое имя вершины";
+
+                        int optionPane = JOptionPane.QUESTION_MESSAGE;
+
+                        for( int isCurrectName = 0; isCurrectName < 1;  ) {
+
+                            answer = JOptionPane.showInputDialog(null, msg, "изменить имя вершины", optionPane);
+                            if(answer == null) {
+                                return;
+                            }
+                            else if(answer.length() > 2 ) {
+                                msg = "длина имени вершины не должна превышать 2";
+                                optionPane = JOptionPane.WARNING_MESSAGE;
+                                continue;
+                            }else if(answer.length() == 0 || " ".equals(answer) || "  ".equals(answer)) {
+                                msg = "имя вершины не может быть пустым";
+                                optionPane = JOptionPane.WARNING_MESSAGE;
+                                continue;
+                            }
+                            isCurrectName = 1;
+                        }
+
+                        vertex.setName(answer);
+                        clone.setName(answer);
+                    }
+                }
+
+                @Override
+                public void mousePressed( MouseEvent mouseEvent ) {
+                    super.mousePressed( mouseEvent );
+                    vertex.setColour( Color.magenta );
+                }
+                @Override
+                public void mouseReleased( MouseEvent mouseEvent ) {
+                    super.mouseReleased( mouseEvent );
+                    vertex.setColour( Color.lightGray);
+                }
+            } );
+
+            clone.addMouseMotionListener(new MouseAdapter() {
+
+                @Override
+                public void mouseDragged( MouseEvent mouseEvent ) {
+                    vertex.setLocation(clone.getLocation());
+                    revalidate();
+                    repaint();
+                }
+            });
+            vertex.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseDragged( MouseEvent mouseEvent ) {
+                    clone.setLocation(vertex.getLocation());
+                    revalidate();
+                    repaint();
+                }
+            });
+
+            leftPanel.addVertex( vertex );
+            rightPanel.addVertex( clone );
+            revalidate();
+            repaint();
+                    //}
+
+        }
+            //} );
+
+
+
+        //}
+    }
+
     private Scene createRightPanel() {
         rightPanel = new Scene();
         rightPanel.setBackground(Color.white);
@@ -241,8 +360,13 @@ public class Main extends JFrame {
                 File file1 = fileChooser.getSelectedFile();
                 statusLabel.setText("Folder Selected: " + file1.getAbsolutePath() );
                 if (file1.getAbsolutePath().contains(".json")) {
-                    facade.setCommand(new LoadCommand(file1.getAbsolutePath()));
-                    facade.createGraph();
+                    //facade.setCommand(new LoadCommand(file1.getAbsolutePath()));
+                    //facade.createGraph();
+                    LoadCommand loadCommand = new LoadCommand(file1.getAbsolutePath());
+                    Graph graph = loadCommand.execute();
+                    graph.printVertices();
+                    this.setVerticesWhileLoading(graph.getVertices());
+                    leftPanel.setRibs(graph.getEdges());
                 } else {
                     statusLabel.setText("You have chosen file of incorrect format");
                 }
@@ -251,14 +375,14 @@ public class Main extends JFrame {
                 statusLabel.setText("Open command canceled");
             }
         });
-
+        /*
         // Пункт меню "Сохранить"
         JMenuItem save = new JMenuItem("Сохранить");
 
         // добавить обработчик действия для кнопки "Сохранить"
         save.addActionListener( actionEvent -> {
             // ...
-        });
+        });*/
 
         // Пункт меню "Сохранить как"
         JMenuItem save_as = new JMenuItem("Сохранить как");
@@ -266,17 +390,19 @@ public class Main extends JFrame {
         // добавить обработчик действия для кнопки "Сохранить как"
         save_as.addActionListener( actionEvent -> {
 
-            String filename = JOptionPane.showInputDialog("Name this file");
+            //String filename = JOptionPane.showInputDialog("Name this file");
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setSelectedFile(new File(filename));
-            fileChooser.showSaveDialog(fileChooser);
-            BufferedWriter writer;
+            //fileChooser.setSelectedFile(new File(filename));
+            //fileChooser.showSaveDialog(fileChooser); ???
+            //BufferedWriter writer;
             int option = fileChooser.showSaveDialog(null);
             if(option == JFileChooser.APPROVE_OPTION){
                 try {
                 /* writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
                     writer.close();*/
                     if (fileChooser.getSelectedFile().getAbsolutePath().contains(".json")) {
+                        facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                        facade.createGraph();
                         facade.saveGraph(fileChooser.getSelectedFile().getAbsolutePath());
                         JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -299,7 +425,7 @@ public class Main extends JFrame {
         exit.addActionListener( actionEvent -> System.exit(0) );
 
         fileMenu.add(read);             // Добавление в меню пункт "Читать из файла"
-        fileMenu.add(save);             // Добавление в меню пункт "Сохранить"
+        //fileMenu.add(save);             // Добавление в меню пункт "Сохранить"
         fileMenu.add(save_as);          // Добавление в меню пункт "Сохранить как"
         fileMenu.addSeparator();        // Добавление разделителя
         fileMenu.add(exit);             // Добавление в меню пункт "Выход"
@@ -439,6 +565,11 @@ public class Main extends JFrame {
         back_btn = new JButton(new ImageIcon("resources/back.png"));
         runStop_btn = new JButton(new ImageIcon("resources/run.png"));
         forward_btn = new JButton(new ImageIcon("resources/forward.png"));
+        redactor_btn = new JButton("Redactor");
+        generate_btn = new JButton("Generate");
+        forward_btn.setEnabled(false);
+        back_btn.setEnabled(false);
+        runStop_btn.setEnabled(false);
 
         addVertex_btn.addActionListener( actionEvent -> {
 			
@@ -501,15 +632,16 @@ public class Main extends JFrame {
             ChangeCurrentOption(Option.NONE);
         });
         forward_btn.addActionListener( actionEvent -> {
-             if (facade.getGraph() == null) {
-                    facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
-                    facade.createGraph();
-                    facade.initAlgorithm();
-                    facade.doAlgorithm();
-                }
-                facade.next();
-                rightPanel.removeRibs();
-                facade.visualizeAlgorithm(rightPanel);
+             if (facade.getGraph() != null) {
+                 //facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                 //facade.createGraph();
+                 facade.initAlgorithm();
+                 facade.doAlgorithm();
+
+                 facade.next();
+                 rightPanel.removeRibs();
+                 facade.visualizeAlgorithm(rightPanel);
+             }
                 updateStatus( "Next...");
 
                 ChangeCurrentOption(Option.NEXT);
@@ -525,15 +657,49 @@ public class Main extends JFrame {
                 ChangeCurrentOption( Option.RUN );
                 
                 //Added by Mikulik 09.07.2021
-                if (facade.getGraph() == null) {
-                    facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
-                    facade.createGraph();
+                if (facade.getGraph() != null) {
+                    //facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                    //facade.createGraph();
+
+                    facade.initAlgorithm();
+                    facade.doAlgorithm();
+                    facade.visualizeAlgorithm(rightPanel);
                 }
-                facade.initAlgorithm();
-                facade.doAlgorithm();
-                facade.visualizeAlgorithm(rightPanel);
             }
         });
+
+        redactor_btn.addActionListener( actionEvent -> {
+            if (isRedactorModeOn == true){
+                addVertex_btn.setEnabled(false);
+                addRib_btn.setEnabled(false);
+                delete_btn.setEnabled(false);
+                clear_btn.setEnabled(false);
+                generate_btn.setEnabled(false);
+                forward_btn.setEnabled(true);
+                back_btn.setEnabled(true);
+                runStop_btn.setEnabled(true);
+
+                facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                facade.createGraph();
+                isRedactorModeOn = false;
+            } else {
+                addVertex_btn.setEnabled(true);
+                addRib_btn.setEnabled(true);
+                delete_btn.setEnabled(true);
+                clear_btn.setEnabled(true);
+                generate_btn.setEnabled(true);
+                forward_btn.setEnabled(false);
+                back_btn.setEnabled(false);
+                runStop_btn.setEnabled(false);
+                isRedactorModeOn = true;
+            }
+            // leftPanel.setCurrentOption( currentOption );
+        });
+
+        generate_btn.addActionListener( actionEvent -> {
+            new GenerateGraphDialog();
+        });
+
         toolBar.add(addVertex_btn);
         toolBar.add(addRib_btn);
         toolBar.add(delete_btn);
@@ -541,7 +707,8 @@ public class Main extends JFrame {
         toolBar.add(back_btn);
         toolBar.add(runStop_btn);
         toolBar.add(forward_btn);
-
+        toolBar.add(redactor_btn);
+        toolBar.add(generate_btn);
         return toolBar;
     }
 
