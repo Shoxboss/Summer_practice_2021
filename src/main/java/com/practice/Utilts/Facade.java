@@ -6,6 +6,8 @@ import com.practice.Graph.Edge;
 import com.practice.Graph.Graph;
 import com.practice.Gui.Rib;
 import com.practice.Gui.Scene;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,6 +21,7 @@ public class Facade {
     private BoruvkaAlg algorithm;
     private CareTaker careTaker;
     private Command command;
+    private static final Logger logger = LogManager.getLogger(Facade.class);
 
     public Facade(){
 
@@ -34,6 +37,7 @@ public class Facade {
             this.algorithm = new BoruvkaAlg(graph);
             this.careTaker = new CareTaker(algorithm);
         } else {
+            logger.fatal("Невозможно инициализировать алгоритм, передан пустой граф");
             throw new NullPointerException();
         }
     }
