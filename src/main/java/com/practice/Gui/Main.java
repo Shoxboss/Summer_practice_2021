@@ -53,7 +53,10 @@ public class Main extends JFrame {
         InitUI();
         this.pack();
         this.setVisible(true);
-        facade = new Facade();        
+        facade = new Facade();
+        //facade.setCommand(new GenerateCommand(3, 3, 4, 10));
+        //facade.createGraph();
+
     }
 
 
