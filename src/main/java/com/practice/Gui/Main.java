@@ -351,7 +351,7 @@ public class Main extends JFrame {
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
                 forward_btn.setBackground(Color.WHITE); 
-            break;
+                break;
             case CREATE:
                 addRib_btn.setBackground( Color.WHITE);
                 addVertex_btn.setBackground(new Color( 250, 100, 100 ));    
@@ -412,13 +412,13 @@ public class Main extends JFrame {
                             
                 break;
             default:
-            addRib_btn.setBackground( Color.WHITE );
-            addVertex_btn.setBackground(Color.WHITE);    
-            clear_btn.setBackground(Color.WHITE);        
-            back_btn.setBackground(Color.WHITE);         
-            runStop_btn.setBackground(Color.WHITE);      
-            forward_btn.setBackground(Color.WHITE); 
-            delete_btn.setBackground(Color.WHITE );    
+                addRib_btn.setBackground( Color.WHITE );
+                addVertex_btn.setBackground(Color.WHITE);
+                clear_btn.setBackground(Color.WHITE);
+                back_btn.setBackground(Color.WHITE);
+                runStop_btn.setBackground(Color.WHITE);
+                forward_btn.setBackground(Color.WHITE);
+                delete_btn.setBackground(Color.WHITE );
         }
 
         currentOption = option;
@@ -475,7 +475,9 @@ public class Main extends JFrame {
 
         clear_btn.addActionListener( actionEvent -> {
                 ChangeCurrentOption(Option.NONE);
-                
+                //
+                facade = new Facade();
+                //
                 leftPanel.clear();
                 rightPanel.clear();
                 updateStatus( "Clear...");
