@@ -150,7 +150,7 @@ public class Graph implements Cloneable{
 
     public void printVertices() {
         for (Node vertex: vertices) {
-            System.out.println(vertex.getName() + " " + vertex.getComponent());
+            System.out.println(vertex.getName() + " " + vertex.getComponent() + vertex.getX() + "." + vertex.getY());
         }
     }
 

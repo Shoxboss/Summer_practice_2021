@@ -25,7 +25,7 @@ public class Rib {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				if (e.getClickCount() == 2 ) {
+				if (e.getClickCount() == 2 && Main.isRedactorModeOn) {
 					Integer weight = 0;
 					String answer;
 					String msg = "напишите вес ребра";

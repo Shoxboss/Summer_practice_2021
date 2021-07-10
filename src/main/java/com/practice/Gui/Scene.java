@@ -205,7 +205,7 @@ public class Scene extends JPanel {
 		return verticesDict;
 	}
 	public void setRibs(ArrayList<Edge> edges){
-		ribs.clear();
+		this.removeRibs();
 		
 		for (Edge edge : edges){
 			Rib rib = new Rib();
@@ -221,6 +221,8 @@ public class Scene extends JPanel {
 			this.addRib(rib);
 		}
 	}
+
+
 
 	public void removeRibs(){
 		for(int i = ribs.size()-1; i >= 0; i--) {
