@@ -53,4 +53,28 @@ public class CareTaker {
             }
         }
     }
+
+    public void stepLastMemento() {
+        BoruvkaAlg.AlgorithmMemento snap = history.get(history.size() - 1);
+        nextIndex = history.size();
+        prevIndex = history.size() - 2;
+        try {
+            originator.restore(snap);
+        } catch (Exception e){
+            Logger logger = LogManager.getLogger(CareTaker.class);
+            logger.error("Restore went wrong");
+        }
+    }
+
+    public void stepFirstMemento() {
+        BoruvkaAlg.AlgorithmMemento snap = history.get(0);
+        nextIndex = 1;
+        prevIndex = -1;
+        try {
+            originator.restore(snap);
+        } catch (Exception e){
+            Logger logger = LogManager.getLogger(CareTaker.class);
+            logger.error("Restore went wrong");
+        }
+    }
 }

@@ -29,8 +29,6 @@ public class GenerateGraphDialog extends JFrame {
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
 
-
-
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -38,8 +36,21 @@ public class GenerateGraphDialog extends JFrame {
         });
 
         // Создание панели с текстовыми полями
+        Container container = getContentPane();
+        container.setLayout(new GridLayout(5, 2));
+        container.add(new JLabel("Введите количество вершин:"));
+        container.add(countVerticesField);
+        container.add(new JLabel("Введите количество ребер:"));
+        container.add(countEdgesField);
+        container.add(new JLabel("Введите минимальный вес ребра:"));
+        container.add(minField);
+        container.add(new JLabel("Введите максимальный вес ребра:"));
+        container.add(maxField);
+        container.add(okButton);
+        container.add(cancelButton);
+
         JPanel contents = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        contents.add(new JLabel("Введите количество вершин:"));
+        /*contents.add(new JLabel("Введите количество вершин:"));
         contents.add(countVerticesField);
         contents.add(new JLabel("Введите количество ребер:"));
         contents.add(countEdgesField);
@@ -48,15 +59,16 @@ public class GenerateGraphDialog extends JFrame {
         contents.add(new JLabel("Введите максимальный вес ребра:"));
         contents.add(maxField);
         contents.add(okButton);
-        contents.add(cancelButton);
-        setContentPane(contents);
+        contents.add(cancelButton);*/
+
         // Определяем размер окна и выводим его на экран
-        setSize(350, 250);
+        setSize(550, 200);
         setResizable(false);
         setVisible(true);
     }
 
     public int getCountVertices() {
+
         return countVertices;
     }
 

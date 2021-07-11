@@ -32,7 +32,7 @@ public class Main extends JFrame {
     };
     private int counter, s_count;
     private int offset = 65;
-    private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn, redactor_btn, generate_btn;
+    private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, first_btn, forward_btn, redactor_btn, generate_btn;
     //static int countVertices, countEdges, min, max;
     static boolean isGenerationOk = false;
     enum Option {
@@ -44,7 +44,8 @@ public class Main extends JFrame {
         RUN,
         STOP,
         NEXT,
-        PREV
+        PREV,
+        FIRST
     }
     private Facade facade;
     public static Option currentOption = Option.NONE;
@@ -166,15 +167,18 @@ public class Main extends JFrame {
                                     isCurrectName = 1;
                                 }
                                 //added bug fix for vertice name replacement
+
                                 HashMap<String, Vertex> dictLeft = leftPanel.getVerticesDict();
                                 HashMap<String, Vertex> dictRight = rightPanel.getVerticesDict();
-                                dictLeft.remove(vertex.getId());
-                                vertex.setName(answer);
-                                dictLeft.put(vertex.getId(), vertex);
-                                dictRight.remove(clone.getId());
-                                clone.setName(answer);
-                                dictRight.put(clone.getId(), clone);
-                                //
+                                if (dictLeft.get(answer) == null) {
+                                    dictLeft.remove(vertex.getId());
+                                    vertex.setName(answer);
+                                    dictLeft.put(vertex.getId(), vertex);
+                                    dictRight.remove(clone.getId());
+                                    clone.setName(answer);
+                                    dictRight.put(clone.getId(), clone);
+                                    //
+                                }
                             }
                         }
 
@@ -384,7 +388,7 @@ public class Main extends JFrame {
         statusPanel.setPreferredSize(new Dimension(getWidth(), 42));
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
         String offset = "        ";
-        statusLabel = new JLabel(offset+"some comment");
+        statusLabel = new JLabel(offset+"[Redactor mode]");
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         statusPanel.add(statusLabel);
 
@@ -519,7 +523,8 @@ public class Main extends JFrame {
                 clear_btn.setBackground(Color.WHITE);        
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
-                forward_btn.setBackground(Color.WHITE); 
+                forward_btn.setBackground(Color.WHITE);
+                first_btn.setBackground(Color.WHITE);
                 
                 break;
             case CLEAR:
@@ -529,7 +534,8 @@ public class Main extends JFrame {
                 clear_btn.setBackground(new Color( 250, 100, 100 ));      
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
-                forward_btn.setBackground(Color.WHITE); 
+                forward_btn.setBackground(Color.WHITE);
+                first_btn.setBackground(Color.WHITE);
                 break;
             case CREATE:
                 addRib_btn.setBackground( Color.WHITE);
@@ -538,7 +544,8 @@ public class Main extends JFrame {
                 clear_btn.setBackground(Color.WHITE);        
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
-                forward_btn.setBackground(Color.WHITE); 
+                forward_btn.setBackground(Color.WHITE);
+                first_btn.setBackground(Color.WHITE);
                 break;
             case RUN:
                 addRib_btn.setBackground( Color.WHITE );
@@ -547,7 +554,8 @@ public class Main extends JFrame {
                 delete_btn.setBackground(Color.WHITE);       
                 clear_btn.setBackground(Color.WHITE);        
                 back_btn.setBackground(Color.WHITE);         
-                forward_btn.setBackground(Color.WHITE); 
+                forward_btn.setBackground(Color.WHITE);
+                first_btn.setBackground(Color.WHITE);
                 break;
             case NEXT:
                 addRib_btn.setBackground( Color.WHITE );
@@ -556,7 +564,8 @@ public class Main extends JFrame {
                 clear_btn.setBackground(Color.WHITE);        
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
-                forward_btn.setBackground(new Color( 250, 100, 100 )); 
+                forward_btn.setBackground(new Color( 250, 100, 100 ));
+                first_btn.setBackground(Color.WHITE);
                 break;
             case PREV:
 
@@ -566,7 +575,8 @@ public class Main extends JFrame {
                 clear_btn.setBackground(Color.WHITE);        
                 runStop_btn.setBackground(Color.WHITE);      
                 forward_btn.setBackground(Color.WHITE); 
-                back_btn.setBackground(new Color( 250, 100, 100 ));         
+                back_btn.setBackground(new Color( 250, 100, 100 ));
+                first_btn.setBackground(Color.WHITE);
 
                 break;
             case STOP:
@@ -577,7 +587,8 @@ public class Main extends JFrame {
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
                 forward_btn.setBackground(Color.WHITE); 
-                runStop_btn.setBackground(new Color( 250, 100, 100 ));      
+                runStop_btn.setBackground(new Color( 250, 100, 100 ));
+                first_btn.setBackground(Color.WHITE);
 
                 break;
             case DELETE:
@@ -587,8 +598,19 @@ public class Main extends JFrame {
                 back_btn.setBackground(Color.WHITE);         
                 runStop_btn.setBackground(Color.WHITE);      
                 forward_btn.setBackground(Color.WHITE); 
-                delete_btn.setBackground(new Color( 250, 100, 100 ));       
+                delete_btn.setBackground(new Color( 250, 100, 100 ));
+                first_btn.setBackground(Color.WHITE);
                             
+                break;
+            case FIRST:
+                addRib_btn.setBackground( Color.WHITE );
+                addVertex_btn.setBackground(Color.WHITE);
+                clear_btn.setBackground(Color.WHITE);
+                back_btn.setBackground(Color.WHITE);
+                runStop_btn.setBackground(Color.WHITE);
+                forward_btn.setBackground(Color.WHITE);
+                delete_btn.setBackground(Color.WHITE);
+                first_btn.setBackground(new Color( 250, 100, 100 ));
                 break;
             default:
                 addRib_btn.setBackground( Color.WHITE );
@@ -598,6 +620,7 @@ public class Main extends JFrame {
                 runStop_btn.setBackground(Color.WHITE);
                 forward_btn.setBackground(Color.WHITE);
                 delete_btn.setBackground(Color.WHITE );
+                first_btn.setBackground(Color.WHITE);
         }
 
         currentOption = option;
@@ -614,12 +637,14 @@ public class Main extends JFrame {
         clear_btn = new JButton(new ImageIcon("resources/trash.png"));
         back_btn = new JButton(new ImageIcon("resources/back.png"));
         runStop_btn = new JButton(new ImageIcon("resources/run.png"));
+        first_btn = new JButton(new ImageIcon("resources/toFirst.png"));
         forward_btn = new JButton(new ImageIcon("resources/forward.png"));
         redactor_btn = new JButton("Redactor");
         generate_btn = new JButton("Generate");
         forward_btn.setEnabled(false);
         back_btn.setEnabled(false);
         runStop_btn.setEnabled(false);
+        first_btn.setEnabled(false);
 
         addVertex_btn.addActionListener( actionEvent -> {
 			
@@ -629,7 +654,7 @@ public class Main extends JFrame {
             } 
             else {
 
-                updateStatus( "Vertices Adding...");
+                updateStatus( "[Redactor mode] Vertices Adding...");
                 ChangeCurrentOption(Option.CREATE);
             }
             // leftPanel.setCurrentOption( currentOption );
@@ -640,7 +665,7 @@ public class Main extends JFrame {
             
             } 
             else {
-                updateStatus( "Ribs Adding...");
+                updateStatus( "[Redactor mode] Ribs Adding...");
                 ChangeCurrentOption(Option.CONNECT);
             }
             //  leftPanel.setCurrentOption( currentOption );
@@ -651,7 +676,7 @@ public class Main extends JFrame {
                 
             } else {
 
-                updateStatus( "Deleting...");
+                updateStatus( "[Redactor mode] Deleting...");
                 ChangeCurrentOption(Option.DELETE);
             }
             // leftPanel.setCurrentOption( currentOption );
@@ -664,7 +689,7 @@ public class Main extends JFrame {
                 //
                 leftPanel.clear();
                 rightPanel.clear();
-                updateStatus( "Clear...");
+                updateStatus( "[Redactor mode] Clear...");
                 s_count=counter = 0;
                 
                 revalidate();
@@ -677,22 +702,23 @@ public class Main extends JFrame {
                 rightPanel.removeRibs();
                 facade.visualizeAlgorithm(rightPanel);
             }
-            updateStatus( "Prev...");
+            updateStatus( "[Algorithm mode] Prev...");
             ChangeCurrentOption(Option.PREV);
             ChangeCurrentOption(Option.NONE);
         });
+
         forward_btn.addActionListener( actionEvent -> {
              if (facade.getGraph() != null) {
                  //facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                  //facade.createGraph();
-                 facade.initAlgorithm();
-                 facade.doAlgorithm();
+                 //facade.initAlgorithm();
+                 //facade.doAlgorithm();
 
                  facade.next();
                  rightPanel.removeRibs();
                  facade.visualizeAlgorithm(rightPanel);
              }
-                updateStatus( "Next...");
+                updateStatus( "[Algorithm mode] Next...");
 
                 ChangeCurrentOption(Option.NEXT);
                 ChangeCurrentOption(Option.NONE);
@@ -703,7 +729,7 @@ public class Main extends JFrame {
 
                 ChangeCurrentOption(Option.NONE);
             }else {
-                updateStatus( "Run...");
+                updateStatus( "[Algorithm mode] Result...");
                 ChangeCurrentOption( Option.RUN );
                 
                 //Added by Mikulik 09.07.2021
@@ -711,15 +737,33 @@ public class Main extends JFrame {
                     //facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                     //facade.createGraph();
 
-                    facade.initAlgorithm();
-                    facade.doAlgorithm();
+                    //facade.initAlgorithm();
+                    //facade.doAlgorithm();
+                    facade.last();
                     facade.visualizeAlgorithm(rightPanel);
                 }
             }
         });
 
+        first_btn.addActionListener(actionEvent -> {
+            if (facade.getGraph() != null) {
+                //facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                //facade.createGraph();
+                //facade.initAlgorithm();
+                //facade.doAlgorithm();
+
+                facade.first();
+                rightPanel.removeRibs();
+                facade.visualizeAlgorithm(rightPanel);
+            }
+            updateStatus( "[Algorithm mode] First step");
+            ChangeCurrentOption(Option.FIRST);
+            ChangeCurrentOption(Option.NONE);
+        });
+
         redactor_btn.addActionListener( actionEvent -> {
-            if (isRedactorModeOn == true){
+            if (isRedactorModeOn){
+                updateStatus( "[Algorithm mode]");
                 addVertex_btn.setEnabled(false);
                 addRib_btn.setEnabled(false);
                 delete_btn.setEnabled(false);
@@ -728,13 +772,15 @@ public class Main extends JFrame {
                 forward_btn.setEnabled(true);
                 back_btn.setEnabled(true);
                 runStop_btn.setEnabled(true);
+                first_btn.setEnabled(true);
 
                 facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                 facade.createGraph();
-                //facade.initAlgorithm();
-                //facade.doAlgorithm();
+                facade.initAlgorithm();
+                facade.doAlgorithm();
                 isRedactorModeOn = false;
             } else {
+                updateStatus( "[Redactor mode]");
                 addVertex_btn.setEnabled(true);
                 addRib_btn.setEnabled(true);
                 delete_btn.setEnabled(true);
@@ -743,6 +789,7 @@ public class Main extends JFrame {
                 forward_btn.setEnabled(false);
                 back_btn.setEnabled(false);
                 runStop_btn.setEnabled(false);
+                first_btn.setEnabled(false);
                 isRedactorModeOn = true;
             }
             // leftPanel.setCurrentOption( currentOption );
@@ -753,23 +800,42 @@ public class Main extends JFrame {
 
             ggd.okButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    int countVertices = Integer.parseInt(ggd.countVerticesField.getText());
-                    int countEdges = Integer.parseInt(ggd.countEdgesField.getText());
-                    int min = Integer.parseInt(ggd.minField.getText());
-                    int max = Integer.parseInt(ggd.maxField.getText());
-                    isGenerationOk = true;
-                    ggd.setVisible(false);
+                    int countVertices = 0;
+                    int countEdges = 0;
+                    int min = 0;
+                    int max = 0;
+                    boolean exceptionHappened = false;
+                    boolean incorrectValue = false;
 
-                    GenerateCommand generateCommand = new GenerateCommand(countVertices, countEdges, min, max);
-                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                    generateCommand.setBorders((int)screenSize.getHeight() / 5, (int)screenSize.getWidth() / 5);
-                    Graph graph = generateCommand.execute();
-                    System.out.println(countVertices);
-                    graph.printVertices();
-                    graph.printEdges();
-                    setVerticesWhileLoading(graph.getVertices());
-                    setNameCounter(graph.getVertices());
-                    leftPanel.setRibs(graph.getEdges());
+                    try {
+                        ggd.setVisible(false);
+                        countVertices = Integer.parseInt(ggd.countVerticesField.getText());
+                        countEdges = Integer.parseInt(ggd.countEdgesField.getText());
+                        min = Integer.parseInt(ggd.minField.getText());
+                        max = Integer.parseInt(ggd.maxField.getText());
+                    } catch (NumberFormatException exception) {
+                        updateStatus("[Redactor mode] Incorrect data");
+                        exceptionHappened = true;
+                    }
+                    if (!exceptionHappened && countEdges > 0 && countVertices > 0 &&
+                            min > 0 && max >= min && (countEdges > countVertices*(countVertices - 1)/2)) {
+                        incorrectValue = true;
+                        updateStatus("[Redactor mode] Incorrect data");
+                    }
+                    if (!incorrectValue && !exceptionHappened) {
+                        isGenerationOk = true;
+                        ggd.setVisible(false);
+                        GenerateCommand generateCommand = new GenerateCommand(countVertices, countEdges, min, max);
+                        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                        generateCommand.setBorders((int) screenSize.getHeight() / 5, (int) screenSize.getWidth() / 5);
+                        Graph graph = generateCommand.execute();
+                        System.out.println(countVertices);
+                        graph.printVertices();
+                        graph.printEdges();
+                        setVerticesWhileLoading(graph.getVertices());
+                        setNameCounter(graph.getVertices());
+                        leftPanel.setRibs(graph.getEdges());
+                    }
                 }
             });
 
@@ -782,11 +848,11 @@ public class Main extends JFrame {
         toolBar.add(clear_btn);
         toolBar.add(back_btn);
         toolBar.add(runStop_btn);
+        toolBar.add(first_btn);
         toolBar.add(forward_btn);
         toolBar.add(redactor_btn);
         toolBar.add(generate_btn);
         return toolBar;
     }
-
 
 }
