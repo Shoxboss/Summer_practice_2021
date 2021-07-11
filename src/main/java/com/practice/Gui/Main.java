@@ -59,10 +59,19 @@ public class Main extends JFrame {
         this.pack();
         this.setVisible(true);
         facade = new Facade();
+        /*Graph g = new Graph();
+        g.addEdge("a", "b", 1);
+        g.addEdge("b", "c", 4);
+        g.addEdge("c", "d", 1);
+        g.addEdge("a", "e", 3);
+        g.addEdge("e", "f", 1);
+        g.addEdge("d", "f", 2);
+        BoruvkaAlg alg = new BoruvkaAlg(g);
+        alg.doAlgorithm();*/
         //facade.setCommand(new GenerateCommand(3, 3, 4, 10));
         //facade.createGraph();
-        String str = "ABD";
-        System.out.println((int)(str.charAt(1)));
+        //String str = "ABD";
+        //System.out.println((int)(str.charAt(1)));
 
     }
 

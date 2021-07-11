@@ -223,7 +223,7 @@ public class Scene extends JPanel {
 			System.out.println(verticesDict.get(edge.getEndName()).getId());
 			//rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
 			//rib.setWeight(edge.getWeight());
-			//rib.setColor( Math.min(edge.getEnd().getComponent(), edge.getStart().getComponent()));
+			rib.setColor( edge.getStart().getComponent());
 			
 			this.addRib(rib);
 		}

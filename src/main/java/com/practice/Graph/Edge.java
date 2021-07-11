@@ -44,7 +44,8 @@ public class Edge implements Cloneable{
 
     @Override
     public String toString() {
-        return getStartName() + "--" + getEndName() + " : " + weight;
+        return getStartName() + "--" + getEndName() + " : " + weight + " | component - " + start.getComponent() +
+                " " + end.getComponent();
     }
 
     @Override
