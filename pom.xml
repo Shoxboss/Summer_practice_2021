@@ -119,14 +119,14 @@
                                         <include>**/*.properties</include>
                                     </includes>
                                 </resource>
-                                <!-- <resource>
+                                 <resource>
                                     <directory>
                                         src/main/resources/Images
                                     </directory>
                                     <includes>
                                         <include>**/*.png</include>
                                     </includes>
-                                </resource> -->
+                                </resource>
                             </resources>
                         </configuration>
                     </execution>

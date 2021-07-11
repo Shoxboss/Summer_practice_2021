@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Main extends JFrame {
@@ -30,8 +31,10 @@ public class Main extends JFrame {
         "V", "W", "X", "Y", "Z"
     };
     private int counter, s_count;
+    private int offset = 65;
     private JButton addVertex_btn , addRib_btn , delete_btn, clear_btn, back_btn, runStop_btn, forward_btn, redactor_btn, generate_btn;
-
+    //static int countVertices, countEdges, min, max;
+    static boolean isGenerationOk = false;
     enum Option {
         NONE,
         CREATE,
@@ -57,6 +60,8 @@ public class Main extends JFrame {
         facade = new Facade();
         //facade.setCommand(new GenerateCommand(3, 3, 4, 10));
         //facade.createGraph();
+        String str = "ABD";
+        System.out.println((int)(str.charAt(1)));
 
     }
 
@@ -160,9 +165,16 @@ public class Main extends JFrame {
                                     }
                                     isCurrectName = 1;
                                 }
-
+                                //added bug fix for vertice name replacement
+                                HashMap<String, Vertex> dictLeft = leftPanel.getVerticesDict();
+                                HashMap<String, Vertex> dictRight = rightPanel.getVerticesDict();
+                                dictLeft.remove(vertex.getId());
                                 vertex.setName(answer);
+                                dictLeft.put(vertex.getId(), vertex);
+                                dictRight.remove(clone.getId());
                                 clone.setName(answer);
+                                dictRight.put(clone.getId(), clone);
+                                //
                             }
                         }
 
@@ -202,6 +214,36 @@ public class Main extends JFrame {
             }
         } );
         return leftPanel;
+    }
+
+    public int convertNameToIndex(String name){
+        if (name.length() >= 1){
+            return (((int) name.charAt(0)) - offset);
+        }
+        return 0;
+    }
+
+    public int convertNameToCounter(String name){
+        if (name.length() > 1){
+            String substring = name.substring(1);
+            return ( Integer.parseInt(substring));
+        }
+        return 0;
+    }
+
+    public void setNameCounter(ArrayList<Node> nodes){
+        int maxCounter = 0;
+        int maxStringCounter = 0;
+        for (Node node : nodes){
+            int cur = this.convertNameToIndex(node.getName());
+            int curStringCounter = this.convertNameToCounter(node.getName());
+            if (cur > maxCounter)
+                maxCounter = cur;
+            if (curStringCounter > maxStringCounter)
+                maxStringCounter = curStringCounter;
+        }
+        counter = maxCounter + 1;
+        s_count = maxStringCounter;
     }
 
     public void setVerticesWhileLoading(ArrayList<Node> nodes){
@@ -272,9 +314,16 @@ public class Main extends JFrame {
                             }
                             isCurrectName = 1;
                         }
-
+                        //added bug fix for vertice name replacement
+                        HashMap<String, Vertex> dictLeft = leftPanel.getVerticesDict();
+                        HashMap<String, Vertex> dictRight = rightPanel.getVerticesDict();
+                        dictLeft.remove(vertex.getId());
                         vertex.setName(answer);
+                        dictLeft.put(vertex.getId(), vertex);
+                        dictRight.remove(clone.getId());
                         clone.setName(answer);
+                        dictRight.put(clone.getId(), clone);
+                        //
                     }
                 }
 
@@ -366,6 +415,7 @@ public class Main extends JFrame {
                     Graph graph = loadCommand.execute();
                     graph.printVertices();
                     this.setVerticesWhileLoading(graph.getVertices());
+                    this.setNameCounter(graph.getVertices());
                     leftPanel.setRibs(graph.getEdges());
                 } else {
                     statusLabel.setText("You have chosen file of incorrect format");
@@ -681,6 +731,8 @@ public class Main extends JFrame {
 
                 facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
                 facade.createGraph();
+                //facade.initAlgorithm();
+                //facade.doAlgorithm();
                 isRedactorModeOn = false;
             } else {
                 addVertex_btn.setEnabled(true);
@@ -697,7 +749,31 @@ public class Main extends JFrame {
         });
 
         generate_btn.addActionListener( actionEvent -> {
-            new GenerateGraphDialog();
+            GenerateGraphDialog ggd = new GenerateGraphDialog();
+
+            ggd.okButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int countVertices = Integer.parseInt(ggd.countVerticesField.getText());
+                    int countEdges = Integer.parseInt(ggd.countEdgesField.getText());
+                    int min = Integer.parseInt(ggd.minField.getText());
+                    int max = Integer.parseInt(ggd.maxField.getText());
+                    isGenerationOk = true;
+                    ggd.setVisible(false);
+
+                    GenerateCommand generateCommand = new GenerateCommand(countVertices, countEdges, min, max);
+                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    generateCommand.setBorders((int)screenSize.getHeight() / 5, (int)screenSize.getWidth() / 5);
+                    Graph graph = generateCommand.execute();
+                    System.out.println(countVertices);
+                    graph.printVertices();
+                    graph.printEdges();
+                    setVerticesWhileLoading(graph.getVertices());
+                    setNameCounter(graph.getVertices());
+                    leftPanel.setRibs(graph.getEdges());
+                }
+            });
+
+
         });
 
         toolBar.add(addVertex_btn);
@@ -711,5 +787,6 @@ public class Main extends JFrame {
         toolBar.add(generate_btn);
         return toolBar;
     }
+
 
 }

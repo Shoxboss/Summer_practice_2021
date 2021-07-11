@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 public class Rib {
 
@@ -81,7 +82,7 @@ public class Rib {
 
 	public boolean isConnect(Vertex vertex) {
 
-		return sourceVertex == vertex || targetVertex == vertex;
+		return sourceVertex == vertex | targetVertex == vertex;
 	}
 
 	public Vertex getSourceVertex() {
@@ -139,5 +140,19 @@ public class Rib {
 		component.setLocation(	(sourceVertex.getX() + targetVertex.getX())/2, 
 								(sourceVertex.getY() + targetVertex.getY())/2 );
 		return new Point[]{ getCenterPoint( sourceVertex ), getCenterPoint( targetVertex ) };
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Rib rib = (Rib) o;
+		return (this.sourceVertex.getId().equals(rib.sourceVertex.getId()) && this.targetVertex.getId().equals(rib.targetVertex.getId()) && Objects.equals(weight, rib.weight)) |
+				(this.sourceVertex.getId().equals(rib.targetVertex.getId()) && this.targetVertex.getId().equals(rib.sourceVertex.getId()) && Objects.equals(weight, rib.weight));
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(sourceVertex.getId(), targetVertex.getId(), weight);
 	}
 }
