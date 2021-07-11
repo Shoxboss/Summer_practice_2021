@@ -62,30 +62,6 @@ public class Facade {
         algorithm.printRes();
     }
 
-    //вызывается после нажатия кнопки добавления вершины
-    public void addVertexManually(){
-        //вызывается конструктор вершины вершины и она добавляется в граф
-        //вызывается метод отрисовки вершины на сцене
-    }
-
-    //вызывается после нажатия кнопки добавления ребра
-    public void addEdgeManually(){
-        //аналогично вершине
-
-    }
-
-    //вызывается после нажатия кнопки удаления вершины
-    public void removeVertexManually(){
-        //вызывается метод удаления вершины
-        //вызывается метод отрисовки вершины на сцене
-    }
-
-    //вызывается после нажатия кнопки удаления ребра
-    public void removeEdgeManually(){
-        //аналогично вершине
-
-    }
-
     /*public void loadGraphFromFile(String filename){
         this.graph = command.execute(filename);
 
@@ -103,11 +79,19 @@ public class Facade {
     }
 
     public void prev(){
-        this.careTaker.undo();
+        careTaker.undo();
     }
 
     public void next() {
-        this.careTaker.stepNextMemento();
+        careTaker.stepNextMemento();
+    }
+
+    public void first() {
+        careTaker.stepFirstMemento();
+    }
+
+    public void last() {
+        careTaker.stepLastMemento();
     }
 
     //Debug

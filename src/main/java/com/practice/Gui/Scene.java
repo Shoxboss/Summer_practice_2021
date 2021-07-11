@@ -112,15 +112,18 @@ public class Scene extends JPanel {
 								super.mouseClicked( e );
 								if(Main.currentOption == Main.Option.DELETE) {
 									remove( Jc );
-								}							}
+								}
+							}
 						} );
+
 						vertex.addMouseListener( new MouseAdapter() {
 							@Override
 							public void mouseClicked( MouseEvent e ) {
 								super.mouseClicked( e );
 								if(Main.currentOption == Main.Option.DELETE) {
 									remove( Jc );
-								}							}
+								}
+							}
 						} );
 
 						Jc.addMouseListener(new MouseAdapter(){
