@@ -2,6 +2,7 @@ package com.practice.Utilts;
 
 import com.practice.Graph.Edge;
 import com.practice.Graph.Graph;
+import com.practice.Graph.Node;
 import com.practice.Gui.Rib;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class GenerateCommand implements Command{
     private int countEdges;
     private int min;
     private int max;
+    private int H = 400;
+    private int W = 400;
     private final String[] alphabet = new String[]
             {
                     "A", "B", "C", "D", "E", "F", "G",
@@ -30,8 +33,16 @@ public class GenerateCommand implements Command{
     @Override
     public Graph execute(){
         Graph graph = new Graph();
+        for (int i = 0; i < countVertices; i++){
+            graph.addVertex(alphabet[i]);
+        }
+        for (int i = 0; i < graph.getCountVertices(); i++){
+            Node node = graph.getVertices().get(i);
+            node.setX(rnd(10, W+10));
+            node.setY(rnd(10, H + 10));
+        }
         for (int i = 0; i < countEdges; i++){
-            while (graph.getCountEdges() < (i + 1)){
+            while (graph.getCountEdges() != (i + 1)){
                 int startInd = rnd(0, countVertices-1);
                 int endInd = rnd(0, countVertices-1);
                 int weight = rnd(min, max);
@@ -46,6 +57,10 @@ public class GenerateCommand implements Command{
         return (int) (Math.random() * ++max) + min;
     }
 
+    public void setBorders(int H, int W){
+        this.H = H;
+        this.W = W;
+    }
 
    /* @Override
     public Graph execute(ArrayList<Rib> ribs){

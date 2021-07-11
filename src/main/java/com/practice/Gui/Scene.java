@@ -130,7 +130,11 @@ public class Scene extends JPanel {
 
 								if(Main.currentOption == Main.Option.DELETE) { 
 									for(int i = 0; i < ribs.size(); i++) {
-										if( ribs.get(i).isConnect( vertex ) ) {
+										if ((ribs.get(i) != null && rib != null) && ribs.get(i).isConnect( vertex )&&  ribs.get(i).isConnect( rib.getSourceVertex() ) ){
+											ribs.remove(i);
+											break;
+										}
+										if( /*ribs.get(i).equals(rib)*/ ribs.get(i).isConnect( vertex ) /*&&  ribs.get(i).isConnect( rib.getTargetVertex() )*/) {
 											ribs.remove(i);
 											break;
 										}	
@@ -151,7 +155,7 @@ public class Scene extends JPanel {
 					
 					
 					for(int i = ribs.size()-1; i >= 0; i--) {
-						if( ribs.get(i).isConnect( vertex ) ) {
+						if( ribs.get(i).isConnect( vertex )&&  ribs.get(i).isConnect( rib.getSourceVertex() ) ) {
 							ribs.remove(i);
 						}	
 					}
@@ -214,8 +218,8 @@ public class Scene extends JPanel {
 			System.out.println(verticesDict.get(edge.getStartName()).getId());
 			rib.setTargetVertex(verticesDict.get(edge.getEndName()));
 			System.out.println(verticesDict.get(edge.getEndName()).getId());
-			rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
-			
+			//rib.setComponent(new Board(String.valueOf(edge.getWeight()), 0, 0));
+			//rib.setWeight(edge.getWeight());
 			//rib.setColor( Math.min(edge.getEnd().getComponent(), edge.getStart().getComponent()));
 			
 			this.addRib(rib);
