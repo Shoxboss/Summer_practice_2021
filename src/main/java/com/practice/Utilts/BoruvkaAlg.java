@@ -44,16 +44,6 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         init();
     }
 
-
-    private void changeComponent(int compStart, int compEnd, Edge edge) {
-        if (compStart > compEnd) {
-            edge.getStart().setComponent(compEnd);
-        }
-        else {
-            edge.getEnd().setComponent(compStart);
-        }
-    }
-
     private void init() {
         countVertices = graph.getCountVertices();
         countEdges = graph.getCountEdges();
@@ -84,7 +74,6 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
             }
         }
 
-
         for (Edge minEdge: minEdges) {
             if (minEdge != null) {
                 int comp1 = minEdge.getStart().getComponent();
@@ -98,10 +87,54 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         }
     }
 
+    /*private void changeComponent(int compStart, int compEnd, Edge edge) {
+        if (compStart > compEnd) {
+            edge.getStart().setComponent(compEnd);
+        }
+        else {
+            edge.getEnd().setComponent(compStart);
+        }
+    }*/
+
+    private void changeComponent(int compStart, int compEnd, Edge edge) {
+        int newComp, oldComp;
+        String nextVertex;
+        ArrayList<Node> changedVertex = new ArrayList<>();
+
+        if (compStart > compEnd) {
+            newComp = compEnd;
+            oldComp = compStart;
+            nextVertex = edge.getStartName();
+            changedVertex.add(edge.getStart());
+        }
+        else {
+            newComp = compStart;
+            oldComp = compEnd;
+            nextVertex = edge.getEndName();
+            changedVertex.add(edge.getEnd());
+        }
+
+        for (Edge e: edges) {
+            if ((e.getStartName().equals(nextVertex) && oldComp == e.getEnd().getComponent())) {
+                changedVertex.add(e.getEnd());
+                nextVertex = e.getEndName();
+            }
+            if ((e.getEndName().equals(nextVertex) && oldComp == e.getStart().getComponent())) {
+                changedVertex.add(e.getStart());
+                nextVertex = e.getStartName();
+            }
+        }
+
+        for (Node v: changedVertex) {
+            v.setComponent(newComp);
+        }
+    }
 
     public void doAlgorithm() {
         while (countTree > 1) {
             algorithmStep();
+            /*printRes();
+            System.out.println("-------------------------");*/
         }
     }
 
@@ -138,6 +171,5 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
         edges = graph.getEdges();
         countTree = snap.countTreeStorage;
     }
-
 
 }
