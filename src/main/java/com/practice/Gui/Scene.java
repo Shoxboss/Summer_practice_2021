@@ -202,7 +202,7 @@ public class Scene extends JPanel {
 		}
 		for( Rib rib: ribs ) {
 
-			graphics2D.setColor( Color.cyan /*rib.getColor()*/ );
+			graphics2D.setColor( rib.getColor() );
 			graphics2D.drawLine( rib.getLine()[0].x,rib.getLine()[0].y, rib.getLine()[1].x,rib.getLine()[1].y );
 		}
 

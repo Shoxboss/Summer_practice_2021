@@ -1,20 +1,39 @@
 package com.practice.Gui;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import com.google.gson.Gson;
-
-import com.practice.Graph.*;
-import com.practice.Utilts.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.BufferedWriter;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import com.practice.Graph.Graph;
+import com.practice.Graph.Node;
+import com.practice.Utilts.Facade;
+import com.practice.Utilts.GenerateCommand;
+import com.practice.Utilts.LoadCommand;
+import com.practice.Utilts.LoadGraphManuallyCommand;
 
 
 public class Main extends JFrame {
@@ -640,16 +659,17 @@ public class Main extends JFrame {
     {
         JToolBar toolBar = new JToolBar(1);
 
+        redactor_btn = new JButton(new ImageIcon("resources/edit.png"));
+        generate_btn = new JButton(new ImageIcon("resources/gen_graph.png"));
         addVertex_btn = new JButton(new ImageIcon("resources/vertex.png"));
         addRib_btn = new JButton(new ImageIcon("resources/rib.png"));
         delete_btn = new JButton(new ImageIcon("resources/delete.png"));
         clear_btn = new JButton(new ImageIcon("resources/trash.png"));
         back_btn = new JButton(new ImageIcon("resources/back.png"));
-        runStop_btn = new JButton(new ImageIcon("resources/run.png"));
-        first_btn = new JButton(new ImageIcon("resources/toFirst.png"));
+        runStop_btn = new JButton(new ImageIcon("resources/go_result.png"));
+        first_btn = new JButton(new ImageIcon("resources/back_start.png"));
         forward_btn = new JButton(new ImageIcon("resources/forward.png"));
-        redactor_btn = new JButton("Redactor");
-        generate_btn = new JButton("Generate");
+
         forward_btn.setEnabled(false);
         back_btn.setEnabled(false);
         runStop_btn.setEnabled(false);
@@ -788,6 +808,7 @@ public class Main extends JFrame {
                 facade.initAlgorithm();
                 facade.doAlgorithm();
                 isRedactorModeOn = false;
+                redactor_btn.setBackground(Color.WHITE);
             } else {
                 updateStatus( "[Redactor mode]");
                 addVertex_btn.setEnabled(true);
@@ -800,57 +821,51 @@ public class Main extends JFrame {
                 runStop_btn.setEnabled(false);
                 first_btn.setEnabled(false);
                 isRedactorModeOn = true;
+                redactor_btn.setBackground(new Color( 250, 100, 100 ));
             }
             // leftPanel.setCurrentOption( currentOption );
         });
 
-        generate_btn.addActionListener( actionEvent -> {
-            GenerateGraphDialog ggd = new GenerateGraphDialog();
 
-            ggd.okButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    int countVertices = 0;
-                    int countEdges = 0;
-                    int min = 0;
-                    int max = 0;
-                    boolean exceptionHappened = false;
-                    boolean incorrectValue = false;
+        generate_btn.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
 
-                    try {
-                        ggd.setVisible(false);
-                        countVertices = Integer.parseInt(ggd.countVerticesField.getText());
-                        countEdges = Integer.parseInt(ggd.countEdgesField.getText());
-                        min = Integer.parseInt(ggd.minField.getText());
-                        max = Integer.parseInt(ggd.maxField.getText());
-                    } catch (NumberFormatException exception) {
-                        updateStatus("[Redactor mode] Incorrect data");
-                        exceptionHappened = true;
-                    }
-                    if (!exceptionHappened && countEdges > 0 && countVertices > 0 &&
-                            min > 0 && max >= min && (countEdges > countVertices*(countVertices - 1)/2)) {
-                        incorrectValue = true;
-                        updateStatus("[Redactor mode] Incorrect data");
-                    }
-                    if (!incorrectValue && !exceptionHappened) {
-                        isGenerationOk = true;
-                        ggd.setVisible(false);
-                        GenerateCommand generateCommand = new GenerateCommand(countVertices, countEdges, min, max);
+                try {
+                    GenerateGraphDialog gen = new GenerateGraphDialog();
+                    gen.getButton().addActionListener( e -> {
+                        int countVtx = gen.getAnswerArray()[0];
+                        int countRibs = gen.getAnswerArray()[1];
+                        int min = gen.getAnswerArray()[2];
+                        int max = gen.getAnswerArray()[3];
+                        GenerateCommand generateCommand = new GenerateCommand(
+                                countVtx,
+                                countRibs >= countVtx*(countVtx-1) ? countVtx*(countVtx-1): countRibs ,
+                                min,
+                                max
+                        );
+
+                        gen.dispose();
                         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                        generateCommand.setBorders((int) screenSize.getHeight() / 5, (int) screenSize.getWidth() / 5);
+                        generateCommand.setBorders((int) screenSize.getHeight() / 2, (int) screenSize.getWidth() / 3);
                         Graph graph = generateCommand.execute();
-                        System.out.println(countVertices);
                         graph.printVertices();
                         graph.printEdges();
                         setVerticesWhileLoading(graph.getVertices());
                         setNameCounter(graph.getVertices());
                         leftPanel.setRibs(graph.getEdges());
-                    }
+
+                    });
+
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
                 }
-            });
 
+            }
+        } );
 
-        });
-
+        toolBar.add(redactor_btn);
+        toolBar.add(generate_btn);
         toolBar.add(addVertex_btn);
         toolBar.add(addRib_btn);
         toolBar.add(delete_btn);
@@ -859,8 +874,7 @@ public class Main extends JFrame {
         toolBar.add(runStop_btn);
         toolBar.add(first_btn);
         toolBar.add(forward_btn);
-        toolBar.add(redactor_btn);
-        toolBar.add(generate_btn);
+
         return toolBar;
     }
 
