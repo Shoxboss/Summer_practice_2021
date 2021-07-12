@@ -20,7 +20,9 @@ public class Rib {
 	public Rib() {
 		sourceVertex = targetVertex = null;
 		component = new Board("0", 0, 0);
+		
 		component.setParentComp(this);
+
 		component.addMouseListener(new MouseAdapter(){
 				
 			@Override
@@ -82,7 +84,7 @@ public class Rib {
 
 	public boolean isConnect(Vertex vertex) {
 
-		return sourceVertex == vertex | targetVertex == vertex;
+		return sourceVertex == vertex || targetVertex == vertex;
 	}
 
 	public Vertex getSourceVertex() {
