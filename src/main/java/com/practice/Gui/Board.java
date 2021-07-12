@@ -9,6 +9,17 @@ public class Board extends JComponent {
 	private String name;
 	protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 
+	private Rib parent;
+
+	public void setParentComp(Rib rib){
+		parent = rib;
+	}
+	
+	public Rib getParentComp() {
+		return parent;
+	}
+
+	
 	public Board(  String name, int x, int y) {
 		super();
 		this.name =name;
