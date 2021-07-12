@@ -103,7 +103,7 @@ public class Scene extends JPanel {
 						rib.getSourceVertex().setColour( Color.lightGray );
 						rib.setWeight( weight );
 
-						JComponent Jc = rib.getComponent();
+						Board Jc = rib.getComponent();
 						add( Jc );
 
 						rib.getSourceVertex().addMouseListener( new MouseAdapter() {
@@ -135,7 +135,7 @@ public class Scene extends JPanel {
 									
 									for(int i = 0; i < ribs.size(); i++) {
 										
-										if(  Jc.getParentComp().getSourceVertex() ==  ribs.get(i).getSourceVertex()  
+										if(  Jc.getParentComp().getSourceVertex() == ribs.get(i).getSourceVertex()
 											&& Jc.getParentComp().getTargetVertex() == ribs.get(i).getTargetVertex()) {
 												ribs.remove(i);
 										}
