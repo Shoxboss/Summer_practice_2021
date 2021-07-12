@@ -405,6 +405,7 @@ public class Main extends JFrame {
 
     private Scene createRightPanel() {
         rightPanel = new Scene();
+	rightPanel.setVisabel(false);
         rightPanel.setBackground(Color.white);
         rightPanel.setBorder(new LineBorder(new Color(232, 232, 232)));
         return rightPanel;
