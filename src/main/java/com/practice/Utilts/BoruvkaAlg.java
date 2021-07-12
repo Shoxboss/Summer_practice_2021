@@ -7,8 +7,7 @@ import com.practice.Graph.Node;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class BoruvkaAlg implements Algorithm, Cloneable {
 
@@ -98,36 +97,46 @@ public class BoruvkaAlg implements Algorithm, Cloneable {
 
     private void changeComponent(int compStart, int compEnd, Edge edge) {
         int newComp, oldComp;
-        String nextVertex;
-        ArrayList<Node> changedVertex = new ArrayList<>();
+        String nextVertexName;
+        //ArrayList<Node> changedVertex = new ArrayList<>();
+        Queue<Node> vertices = new LinkedList<>();
+
+        System.out.println("Before");
+        System.out.println("Edge: " + edge.toString());
 
         if (compStart > compEnd) {
             newComp = compEnd;
             oldComp = compStart;
-            nextVertex = edge.getStartName();
-            changedVertex.add(edge.getStart());
+            nextVertexName = edge.getStartName();
+            vertices.add(edge.getStart());
+            edge.getStart().setComponent(newComp);
         }
         else {
             newComp = compStart;
             oldComp = compEnd;
-            nextVertex = edge.getEndName();
-            changedVertex.add(edge.getEnd());
+            nextVertexName = edge.getEndName();
+            vertices.add(edge.getEnd());
+            edge.getEnd().setComponent(newComp);
         }
 
-        for (Edge e: edges) {
-            if ((e.getStartName().equals(nextVertex) && oldComp == e.getEnd().getComponent())) {
-                changedVertex.add(e.getEnd());
-                nextVertex = e.getEndName();
+        /*System.out.println("After");
+        System.out.println("Edge: " + edge.toString());
+        System.out.println("newComp - " + newComp + " | oldComp - " + oldComp + " | nextV - " + nextVertexName);*/
+
+        while (vertices.size() > 0) {
+            for (Edge e : edges) {
+                if ((e.getStartName().equals(vertices.element().getName()) && oldComp == e.getEnd().getComponent())) {
+                    vertices.add(e.getEnd());
+                    e.getEnd().setComponent(newComp);
+                }
+                if ((e.getEndName().equals(vertices.element().getName()) && oldComp == e.getStart().getComponent())) {
+                    vertices.add(e.getStart());
+                    e.getStart().setComponent(newComp);
+                }
             }
-            if ((e.getEndName().equals(nextVertex) && oldComp == e.getStart().getComponent())) {
-                changedVertex.add(e.getStart());
-                nextVertex = e.getStartName();
-            }
+            vertices.remove();
         }
 
-        for (Node v: changedVertex) {
-            v.setComponent(newComp);
-        }
     }
 
     public void doAlgorithm() {
