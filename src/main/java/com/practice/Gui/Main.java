@@ -840,7 +840,7 @@ public class Main extends JFrame {
                         int max = gen.getAnswerArray()[3];
                         GenerateCommand generateCommand = new GenerateCommand(
                                 countVtx,
-                                countRibs >= countVtx*(countVtx-1) ? countVtx*(countVtx-1): countRibs ,
+                                Math.min(countRibs, (countVtx * (countVtx - 1)) / 2) ,
                                 min,
                                 max
                         );
