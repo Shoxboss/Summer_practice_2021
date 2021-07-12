@@ -8,7 +8,6 @@ public class Board extends JComponent {
 	private Dimension size;
 	private String name;
 	protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-
 	private Rib parent;
 
 	public void setParentComp(Rib rib){
@@ -19,7 +18,6 @@ public class Board extends JComponent {
 		return parent;
 	}
 
-	
 	public Board(  String name, int x, int y) {
 		super();
 		this.name =name;
