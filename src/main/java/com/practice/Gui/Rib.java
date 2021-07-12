@@ -20,7 +20,7 @@ public class Rib {
 	public Rib() {
 		sourceVertex = targetVertex = null;
 		component = new Board("0", 0, 0);
-
+		component.setParentComp(this);
 		component.addMouseListener(new MouseAdapter(){
 				
 			@Override
