@@ -1,7 +1,10 @@
 package com.practice.Graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Stack;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -130,6 +133,37 @@ public class Graph implements Cloneable{
         if (edges.remove(remEdge)) {
             countEdges--;
         }
+    }
+
+    public boolean isCorrect(){
+        if (this.edges.size() == 0 || this.vertices.size() == 0)
+            return false;
+        Stack<String> stack = new Stack<>();
+        HashMap<String, Boolean> used = new HashMap<String, Boolean>();
+        for (Node vertice : vertices){
+            used.put(vertice.getName(), false);
+        }
+        stack.push(vertices.get(0).getName());
+        used.put(vertices.get(0).getName(), true);
+        while (stack.size() > 0){
+            String curName = stack.pop();
+            for (Edge edge : edges){
+                if (edge.getStartName().equals(curName)){
+                    if (used.get(edge.getEndName()) == false){
+                        stack.push(edge.getEndName());
+                        used.put(edge.getEndName(), true);
+                    }
+                } else if (edge.getEndName().equals(curName)){
+                    if (used.get(edge.getStartName()) == false){
+                        stack.push(edge.getStartName());
+                        used.put(edge.getStartName(), true);
+                    }
+                }
+            }
+        }
+        if (used.containsValue(false))
+            return false;
+        return true;
     }
 
     public ArrayList<Node> getVertices() {

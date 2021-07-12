@@ -5,17 +5,26 @@ import com.practice.Graph.Node;
 import com.practice.Gui.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoadGraphManuallyCommand implements Command{
 
     private ArrayList<Rib> ribs;
+    private HashMap<String, Vertex> verticeDict;
 
-    public LoadGraphManuallyCommand(ArrayList<Rib> ribs){
+    public LoadGraphManuallyCommand(ArrayList<Rib> ribs, HashMap<String, Vertex> verticeDict){
         this.ribs = ribs;
+        this.verticeDict = verticeDict;
     }
     @Override
     public Graph execute(){
         Graph graph = new Graph();
+        /*for (Vertex value : verticeDict.values()){
+            graph.addVertex(value.getId());
+            Node cur = graph.getVertices().get(graph.getCountVertices() - 1);
+            cur.setX(value.getX());
+            cur.setY(value.getY());
+        }*/
         for (Rib rib : ribs){
             graph.addEdge(rib.getSourceVertex().getId(), rib.getTargetVertex().getId(), rib.getWeight().intValue());
             // experimental
@@ -26,7 +35,7 @@ public class LoadGraphManuallyCommand implements Command{
             start.setY(rib.getSourceVertex().getY());
             end.setX(rib.getTargetVertex().getX());
             end.setY(rib.getTargetVertex().getY());
-            //
+
         }
         return graph;
     }

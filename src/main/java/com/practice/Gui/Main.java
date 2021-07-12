@@ -484,7 +484,7 @@ public class Main extends JFrame {
                 /* writer = new BufferedWriter(new FileWriter(fileChooser.getSelectedFile()));
                     writer.close();*/
                     if (fileChooser.getSelectedFile().getAbsolutePath().contains(".json")) {
-                        facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+                        facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList(), leftPanel.getVerticesDict()));
                         facade.createGraph();
                         facade.saveGraph(fileChooser.getSelectedFile().getAbsolutePath());
                         JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
@@ -793,23 +793,28 @@ public class Main extends JFrame {
 
         redactor_btn.addActionListener( actionEvent -> {
             if (isRedactorModeOn){
-                updateStatus( "[Algorithm mode]");
-                addVertex_btn.setEnabled(false);
-                addRib_btn.setEnabled(false);
-                delete_btn.setEnabled(false);
-                clear_btn.setEnabled(false);
-                generate_btn.setEnabled(false);
-                forward_btn.setEnabled(true);
-                back_btn.setEnabled(true);
-                runStop_btn.setEnabled(true);
-                first_btn.setEnabled(true);
 
-                facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList()));
+
+                facade.setCommand(new LoadGraphManuallyCommand(leftPanel.getRibList(), leftPanel.getVerticesDict()));
                 facade.createGraph();
-                facade.initAlgorithm();
-                facade.doAlgorithm();
-                isRedactorModeOn = false;
-                redactor_btn.setBackground(Color.WHITE);
+                if (facade.getGraph().isCorrect()) {
+                    facade.initAlgorithm();
+                    facade.doAlgorithm();
+                    isRedactorModeOn = false;
+                    redactor_btn.setBackground(Color.WHITE);
+                    updateStatus( "[Algorithm mode]");
+                    addVertex_btn.setEnabled(false);
+                    addRib_btn.setEnabled(false);
+                    delete_btn.setEnabled(false);
+                    clear_btn.setEnabled(false);
+                    generate_btn.setEnabled(false);
+                    forward_btn.setEnabled(true);
+                    back_btn.setEnabled(true);
+                    runStop_btn.setEnabled(true);
+                    first_btn.setEnabled(true);
+                } else {
+                    updateStatus( "[INCORRECT GRAPH. Please, try again]");
+                }
             } else {
                 updateStatus( "[Redactor mode]");
                 addVertex_btn.setEnabled(true);
