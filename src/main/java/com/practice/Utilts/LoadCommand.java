@@ -53,7 +53,7 @@ public class LoadCommand implements Command{
                 end.setY(edge.getEnd().getY());
             }
         } catch (IOException e){
-
+            e.printStackTrace();
         }
         return cloneGraph;
     }
