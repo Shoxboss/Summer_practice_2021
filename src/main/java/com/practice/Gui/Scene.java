@@ -132,18 +132,16 @@ public class Scene extends JPanel {
 							public void mouseClicked(MouseEvent e) {
 
 								if(Main.currentOption == Main.Option.DELETE) { 
+									
 									for(int i = 0; i < ribs.size(); i++) {
-										if ((ribs.get(i) != null && rib != null) && ribs.get(i).isConnect( vertex )&&  ribs.get(i).isConnect( rib.getSourceVertex() ) ){
-											ribs.remove(i);
-											break;
+										
+										if(  Jc.getParentComp().getSourceVertex() ==  ribs.get(i).getSourceVertex()  
+											&& Jc.getParentComp().getTargetVertex() == ribs.get(i).getTargetVertex()) {
+												ribs.remove(i);
 										}
-										if( /*ribs.get(i).equals(rib)*/ ribs.get(i).isConnect( vertex ) /*&&  ribs.get(i).isConnect( rib.getTargetVertex() )*/) {
-											ribs.remove(i);
-											break;
-										}	
 									}			
 									remove(Jc);
-									repaint();						
+									repaint();										
 								}
 							}
 						});
