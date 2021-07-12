@@ -66,7 +66,7 @@ public class GenerateCommand implements Command{
 
     class Rand {
         int[][] massive;
-        private int row = 15, col = 15;
+        private int row = 10, col = 10;
         Rand() {
             massive = new int[row][col];
             for(int j=0;j< massive.length; j++){
@@ -78,7 +78,7 @@ public class GenerateCommand implements Command{
         }
 
         public int randInt(int min, int max){
-            return (int)Math.floor(min + Math.random()*( Math.abs( max-min)));
+            return (int)Math.floor(min + Math.random()*( Math.abs( max-min) + 1));
         }
 
         public Point genPoint(){
@@ -87,8 +87,8 @@ public class GenerateCommand implements Command{
             boolean flag = true;
 
             while(flag) {
-                x = randInt( 1, col );
-                y = randInt( 1, col );
+                x = randInt( 1, col - 1 );
+                y = randInt( 1, col - 1);
                 if( massive[x][y] != 0 ) {
                     continue;
                 }
